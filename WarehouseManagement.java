@@ -12,7 +12,7 @@ public class WarehouseManagement extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Dashboard_screen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Login_screen.fxml"));
         stage.setTitle("Warehouse Management");
         stage.setScene(new Scene(root));
         stage.show();

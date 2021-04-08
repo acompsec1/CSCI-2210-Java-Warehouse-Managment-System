@@ -12,46 +12,51 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="941.0" prefWidth="1078.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Dashboard">
    <left>
-      <AnchorPane fx:id="root" prefHeight="749.0" prefWidth="400.0" style="-fx-background-color: #24272B;" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="root" prefHeight="639.0" prefWidth="400.0" style="-fx-background-color: #24272B;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="184.0" fitWidth="184.0" layoutX="108.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="125.0" fitWidth="135.0" layoutX="141.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../Downloads/Logo_Final.png" />
+                  <Image url="@Logo_Final.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="22.0" fitWidth="158.0" layoutX="123.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../Downloads/Logo_Long.png" />
+                  <Image url="@Logo_Long.png" />
                </image>
             </ImageView>
-            <Button layoutX="150.0" layoutY="308.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Add Item" textFill="#e8f1f2">
+            <Button layoutX="150.0" layoutY="275.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Add Item" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="150.0" layoutY="384.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Delete Item" textFill="#e8f1f2">
+            <Button layoutX="150.0" layoutY="325.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Delete Item" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="150.0" layoutY="466.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Edit Item " textFill="#e8f1f2">
+            <Button layoutX="150.0" layoutY="375.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Edit Item " textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="150.0" layoutY="543.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="People" textFill="#e8f1f2">
+            <Button layoutX="150.0" layoutY="425.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="People" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="150.0" layoutY="629.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Barrowing " textFill="#e8f1f2">
+            <Button layoutX="150.0" layoutY="475.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Borrowing " textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="150.0" layoutY="705.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Settings" textFill="#e8f1f2">
+            <Button layoutX="150.0" layoutY="525.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Settings" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="150.0" layoutY="225.0" mnemonicParsing="false" onAction="#onSignOutClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Logout" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -62,20 +67,20 @@
    <top>
       <MenuBar style="-fx-background-color: #07070A;" BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" style="-fx-text-color: #e8f1f2;" text="File">
+          <Menu mnemonicParsing="false" style="-fx-text-color: #ffffff;" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-                  <MenuItem mnemonicParsing="false" text="Add Item" />
-                  <MenuItem mnemonicParsing="false" text="Edit Item" />
-                  <MenuItem mnemonicParsing="false" text="Users" />
-                  <MenuItem mnemonicParsing="false" text="Barrowing" />
-                  <MenuItem mnemonicParsing="false" text="Settings" />
-                  <MenuItem mnemonicParsing="false" text="Logout" />
+                  <MenuItem disable="true" mnemonicParsing="false" text="Add Item" visible="false" />
+                  <MenuItem disable="true" mnemonicParsing="false" text="Edit Item" visible="false" />
+                  <MenuItem disable="true" mnemonicParsing="false" text="Users" visible="false" />
+                  <MenuItem disable="true" mnemonicParsing="false" text="Borrowing" visible="false" />
+                  <MenuItem disable="true" mnemonicParsing="false" text="Settings" visible="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSignOutClick" text="Logout" />
+              <MenuItem disable="true" mnemonicParsing="false" text="Close" visible="false" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" style="-fx-text-color: #e8f1f2;" text="Edit">
+          <Menu disable="true" mnemonicParsing="false" style="-fx-text-color: #e8f1f2;" text="Edit" visible="false">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem disable="true" mnemonicParsing="false" text="Delete" visible="false" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" style="-fx-text-color: #e8f1f2;" text="Help">
@@ -87,7 +92,7 @@
       </MenuBar>
    </top>
    <center>
-      <TableView prefHeight="916.0" prefWidth="975.0" style="-fx-background-color: #4A525A;" BorderPane.alignment="CENTER">
+      <TableView prefHeight="744.0" prefWidth="678.0" style="-fx-background-color: #4A525A;" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn prefWidth="44.66668701171875" style="-fx-background-color: #25292D;" text="#" />
           <TableColumn prefWidth="120.0" style="-fx-background-color: #25292D;" text="Category" />

@@ -18,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Window;
+import javafx.scene.layout.BorderPane;
 
 
 
@@ -25,6 +26,7 @@ public class Login implements Initializable{
 
     @FXML
     private AnchorPane root;
+    private BorderPane border;
 
     @FXML
     private Button signin_btn;
@@ -63,7 +65,7 @@ public class Login implements Initializable{
 
         if (input_uname.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, window, "Form Error!",
-                    "Please enter your email id");
+                    "Please enter your username");
             return;
         }
         if (input_psword.getText().isEmpty()) {
@@ -80,7 +82,7 @@ public class Login implements Initializable{
         if (!flag) {
             infoBox("Please enter correct Email and Password", null, "Failed");
         } else {
-            AnchorPane pane = FXMLLoader.load(getClass().getResource("Dashboard_screen.fxml"));
+            BorderPane pane = FXMLLoader.load(getClass().getResource("Dashboard_screen.fxml"));
             root.getChildren().setAll(pane);
         }
 
