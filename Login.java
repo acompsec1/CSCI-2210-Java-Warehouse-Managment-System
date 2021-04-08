@@ -9,8 +9,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
 
-public class Login {
+
+public class Login implements Initializable{
+
+    @FXML
+    private AnchorPane root;
 
     @FXML
     private Button signin_btn;
@@ -35,18 +43,21 @@ public class Login {
     }
 
     @FXML
-    void onSignInClick(ActionEvent event) {
-        // sign in button
+    void onSignInClick(ActionEvent event) throws IOException{
     }
 
     @FXML
     void onSignUpClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Registration_screen.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.setTitle("Registration");
-        stage.setScene(new Scene(root1));  
-        stage.show();
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("Registration_screen.fxml"));
+        root.getChildren().setAll(pane);
+//        Parent root1 = (Parent) fxmlLoader.load();
+//        Stage stage = new Stage();
+//        stage.setTitle("Registration");
+//        stage.setScene(new Scene(root1));
+//        stage.show();
     }
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
 
+    }
 }
