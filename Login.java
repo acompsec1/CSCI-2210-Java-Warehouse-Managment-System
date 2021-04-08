@@ -10,9 +10,15 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.net.URL;
+//import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Window;
+
 
 
 public class Login implements Initializable{
@@ -39,11 +45,55 @@ public class Login implements Initializable{
 
     @FXML
     void onPasswordResetClick(ActionEvent event) {
-        //forgot password button
+
+    }
+
+    public static void infoBox(String infoMessage, String headerText, String title) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setContentText(infoMessage);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.showAndWait();
     }
 
     @FXML
-    void onSignInClick(ActionEvent event) throws IOException{
+    void onSignInClick(ActionEvent event) throws Exception {
+
+        Window window = signin_btn.getScene().getWindow();
+
+        if (input_uname.getText().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter your email id");
+            return;
+        }
+        if (input_psword.getText().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, window , "Form Error!",
+                    "Please enter a password");
+            return;
+        }
+        String username = input_uname.getText();
+        String password = input_psword.getText();
+
+        DatabaseConnector database = new DatabaseConnector();
+        boolean flag = database.validate(username, password);
+
+        if (!flag) {
+            infoBox("Please enter correct Email and Password", null, "Failed");
+        } else {
+            AnchorPane pane = FXMLLoader.load(getClass().getResource("Dashboard_screen.fxml"));
+            root.getChildren().setAll(pane);
+        }
+
+    }
+
+    private static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(owner);
+        alert.show();
+
     }
 
     @FXML
