@@ -3,15 +3,15 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+
+import java.math.BigInteger;
 import java.net.URL;
 //import java.sql.Connection;
-import java.sql.SQLException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
@@ -74,16 +74,27 @@ public class Login implements Initializable{
             return;
         }
         String username = input_uname.getText();
-        String password = input_psword.getText();
+        String password = getMD5(input_psword.getText());
 
         DatabaseConnector database = new DatabaseConnector();
         boolean flag = database.validate(username, password);
 
+
         if (!flag) {
             infoBox("Please enter correct Email and Password", null, "Failed");
         } else {
-            BorderPane pane = FXMLLoader.load(getClass().getResource("Dashboard_screen.fxml"));
-            root.getChildren().setAll(pane);
+            Boolean role = database.getRole(username, password);
+            if (role){
+                BorderPane pane = FXMLLoader.load(getClass().getResource("Admin_screen.fxml"));
+                root.getChildren().setAll(pane);
+            }
+            else{
+                AnchorPane pane = FXMLLoader.load(getClass().getResource("Registration_screen.fxml"));
+                root.getChildren().setAll(pane);
+            }
+//            else{
+//                System.out.print("THIS FAILED");
+//            }
         }
 
     }
@@ -111,5 +122,25 @@ public class Login implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb){
 
+    }
+
+    public static String getMD5(String password)
+    {
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("MD5");
+
+            byte[] messageDigest = md.digest(password.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashtext = no.toString(16);
+            while(hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Source: https://www.geeksforgeeks.org/md5-hash-in-java/
     }
 }

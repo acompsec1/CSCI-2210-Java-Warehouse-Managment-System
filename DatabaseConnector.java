@@ -3,6 +3,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class DatabaseConnector {
 
@@ -10,6 +13,7 @@ public class DatabaseConnector {
     private static final String DATABASE_USERNAME = "root";
     private static final String DATABASE_PASSWORD = "ki8&fRda";
     private static final String SELECT_QUERY = "SELECT * FROM users WHERE username = ? and password_hash = ?";
+    private static final String ROLE_QUERY = "SELECT role_id FROM users WHERE username = ? and password_hash = ?";
 
     public static Connection getConnection() throws SQLException{
         try{
@@ -51,6 +55,40 @@ public class DatabaseConnector {
         return false;
     }
 
+    public boolean getRole(String usernameId, String password) throws SQLException{
+
+        // Step 1: Establishing a Connection and
+        // try-with-resource statement will auto close the connection.
+        Connection con = getConnection();
+        try (
+
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(ROLE_QUERY)) {
+            preparedStatement.setString(1, usernameId);
+            preparedStatement.setString(2, password);
+
+//            System.out.println(preparedStatement);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String value = resultSet.getString(1);
+                System.out.print(value);
+                if (value.equals("1")){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            printSQLException(e);
+        }
+        return false;
+    }
     public static void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
@@ -66,5 +104,7 @@ public class DatabaseConnector {
             }
         }
     }
+
+
 
 }
