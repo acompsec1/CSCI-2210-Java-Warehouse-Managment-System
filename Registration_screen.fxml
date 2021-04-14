@@ -5,67 +5,83 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1080.0" style="-fx-background-color: #24272B; -fx-border-color: #000000; -fx-border-width: 10px;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Register">
-   <children>
-      <Label layoutX="328.0" layoutY="14.0" prefHeight="97.0" prefWidth="437.0" text="Welcome to WMS!" textFill="#e8f1f2">
-         <font>
-            <Font name="System Bold" size="48.0" />
-         </font>
-      </Label>
-      <Label layoutX="375.0" layoutY="77.0" prefHeight="34.0" prefWidth="343.0" text="Warehouse Management System" textFill="#e8f1f2">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <AnchorPane layoutX="428.0" layoutY="136.0" prefHeight="462.0" prefWidth="580.0" style="-fx-background-color: #E8F1F2; -fx-border-color: #157F1F; -fx-border-width: 5px; -fx-border-radius: 22; -fx-background-radius: 25;">
+
+<BorderPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Register">
+   <left>
+      <AnchorPane prefHeight="395.0" prefWidth="417.0" style="-fx-background-color: #24272b;" BorderPane.alignment="CENTER">
          <children>
-            <Button id="signin_btn" fx:id="register_btn" layoutX="137.0" layoutY="349.0" mnemonicParsing="false" onAction="#onSignInClick" prefHeight="36.0" prefWidth="305.0" style="-fx-background-color: #157F1F; -fx-background-radius: 25px;" text="Sign Up" textFill="WHITE">
+            <Label layoutX="48.0" layoutY="62.0" prefHeight="38.0" prefWidth="321.0" text="Welcome to Resgistration" textAlignment="CENTER" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+            <Label layoutX="48.0" layoutY="135.0" text="Thank you for choosing to create&#10;and account with WMS all we ask &#10;of you is that you provide a Username &#10;and a Password to create your accout" textAlignment="CENTER" textFill="#e8f1f2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button id="signin_btn" fx:id="signin_btn_register" layoutX="56.0" layoutY="320.0" mnemonicParsing="false" onAction="#onSignInRegisterClick" prefHeight="36.0" prefWidth="305.0" style="-fx-background-color: #157F1F; -fx-background-radius: 25px;" text="Sign In" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Button>
-            <TextField id="username_input" fx:id="input_uname" layoutX="190.0" layoutY="144.0" prefHeight="36.0" prefWidth="305.0" style="-fx-background-color: #8790AB; -fx-background-radius: 25;" />
-            <Label layoutX="206.0" layoutY="14.0" text="Sign Up">
+            <Label layoutX="62.0" layoutY="294.0" text="Already have an accout? Sign in here!" textFill="#e8f1f2" />
+         </children>
+      </AnchorPane>
+   </left>
+   <top>
+      <AnchorPane prefHeight="119.0" prefWidth="895.0" style="-fx-background-color: #24272b;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="201.0" layoutY="31.0" prefHeight="73.0" prefWidth="587.0" text="Welcome to Warehouse Manager!" textAlignment="CENTER" textFill="#e8f1f2">
                <font>
-                  <Font size="48.0" />
-               </font>
-            </Label>
-            <Label layoutX="84.0" layoutY="144.0" prefHeight="35.0" prefWidth="87.0" text="Username" textFill="#004ba8">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <PasswordField id="password_input" fx:id="input_psword1" layoutX="190.0" layoutY="197.0" prefHeight="35.0" prefWidth="305.0" style="-fx-background-color: #8790AB; -fx-background-radius: 25;" />
-            <Label layoutX="84.0" layoutY="197.0" prefHeight="35.0" prefWidth="87.0" text="Password" textFill="#004ba8">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <PasswordField id="password_input" fx:id="input_psword2" layoutX="190.0" layoutY="250.0" prefHeight="35.0" prefWidth="305.0" style="-fx-background-color: #8790AB; -fx-background-radius: 25;" />
-            <Label layoutX="84.0" layoutY="250.0" prefHeight="35.0" prefWidth="87.0" text="Confirm" textFill="#004ba8">
-               <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="36.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="57.0" layoutY="156.0" prefHeight="38.0" prefWidth="321.0" text="Welcome to Resgistration" textAlignment="CENTER" textFill="#e8f1f2">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-      </Label>
-      <Label layoutX="64.0" layoutY="236.0" text="Thank you for choosing to create&#10;and account with WMS all we ask &#10;of you is that you provide a Username &#10;and a Password to create your accout" textAlignment="CENTER" textFill="#e8f1f2">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Button id="signin_btn" fx:id="signin_btn_register" layoutX="65.0" layoutY="527.0" mnemonicParsing="false" onAction="#onSignInRegisterClick" prefHeight="36.0" prefWidth="305.0" style="-fx-background-color: #157F1F; -fx-background-radius: 25px;" text="Sign In" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Button>
-      <Label layoutX="119.0" layoutY="500.0" text="Already have an accout? Sign in here!" textFill="#e8f1f2" />
-   </children>
-</AnchorPane>
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="87.0" prefWidth="991.0" style="-fx-background-color: #24272b;" BorderPane.alignment="CENTER" />
+   </bottom>
+   <right>
+      <AnchorPane prefHeight="463.0" prefWidth="614.0" style="-fx-background-color: #24272b;" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="462.0" prefWidth="573.0" style="-fx-background-color: #E8F1F2; -fx-border-color: #157F1F; -fx-border-width: 5px; -fx-border-radius: 22; -fx-background-radius: 25;">
+               <children>
+                  <Button id="signin_btn" fx:id="register_btn" layoutX="137.0" layoutY="349.0" mnemonicParsing="false" onAction="#onSignInClick" prefHeight="36.0" prefWidth="305.0" style="-fx-background-color: #157F1F; -fx-background-radius: 25px;" text="Sign Up" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+                  <TextField id="username_input" fx:id="input_uname" layoutX="190.0" layoutY="144.0" prefHeight="36.0" prefWidth="305.0" style="-fx-background-color: #8790AB; -fx-background-radius: 25;" />
+                  <Label layoutX="206.0" layoutY="14.0" text="Sign Up">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="84.0" layoutY="144.0" prefHeight="35.0" prefWidth="87.0" text="Username" textFill="#004ba8">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <PasswordField id="password_input" fx:id="input_psword1" layoutX="190.0" layoutY="197.0" prefHeight="35.0" prefWidth="305.0" style="-fx-background-color: #8790AB; -fx-background-radius: 25;" />
+                  <Label layoutX="84.0" layoutY="197.0" prefHeight="35.0" prefWidth="87.0" text="Password" textFill="#004ba8">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <PasswordField id="password_input" fx:id="input_psword2" layoutX="190.0" layoutY="250.0" prefHeight="35.0" prefWidth="305.0" style="-fx-background-color: #8790AB; -fx-background-radius: 25;" />
+                  <Label layoutX="84.0" layoutY="250.0" prefHeight="35.0" prefWidth="87.0" text="Confirm" textFill="#004ba8">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>
