@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane id="root" fx:id="rootPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #24272B; -fx-border-color: #000000;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginController">
+   <right>
+      <AnchorPane prefHeight="549.0" prefWidth="520.0" style="-fx-background-color: #24272b;" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane layoutX="71.0" layoutY="3.0" prefHeight="494.0" prefWidth="351.0" style="-fx-background-color: #e8f1f1; -fx-border-color: #157f1f; -fx-border-width: 5px; -fx-border-radius: 22; -fx-background-radius: 25;">
+               <children>
+                  <Button id="signin_btn" fx:id="signin_btn" layoutX="23.0" layoutY="398.0" mnemonicParsing="false" onAction="#onSignInClick" prefHeight="36.0" prefWidth="305.0" style="-fx-background-color: #157F1F; -fx-background-radius: 25px;" text="Sign In" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+                  <PasswordField id="password_input" fx:id="input_psword" layoutX="23.0" layoutY="286.0" prefHeight="35.0" prefWidth="305.0" style="-fx-background-color: #8790AB; -fx-background-radius: 25;" />
+                  <TextField id="username_input" fx:id="input_uname" layoutX="23.0" layoutY="168.0" prefHeight="36.0" prefWidth="305.0" style="-fx-background-color: #8790AB; -fx-background-radius: 25;" />
+                  <Label layoutX="123.0" layoutY="247.0" prefHeight="35.0" prefWidth="87.0" text="Password" textFill="#004ba8">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="94.0" layoutY="44.0" text="Sign In">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
+                  <Button id="forgot_psword" fx:id="psword_reset" layoutX="92.0" layoutY="435.0" mnemonicParsing="false" onAction="#onPasswordResetClick" prefHeight="36.0" prefWidth="167.0" style="-fx-background-color: #E8F1F2;" text="Forgot Password?" />
+                  <Label layoutX="123.0" layoutY="132.0" prefHeight="35.0" prefWidth="87.0" text="Username" textFill="#004ba8">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </right>
+   <left>
+      <AnchorPane prefHeight="502.0" prefWidth="560.0" style="-fx-background-color: #24272B;" BorderPane.alignment="CENTER">
+         <children>
+            <Button id="signup_btn" fx:id="signup_btn" layoutX="127.0" layoutY="357.0" mnemonicParsing="false" onAction="#onSignUpClick" prefHeight="36.0" prefWidth="305.0" style="-fx-background-color: #157F1F; -fx-background-radius: 25;" text="Sign Up" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+            <Label layoutX="127.0" layoutY="311.0" text="Don't have an Accout? &#10;Enroll Now!&#10;" textFill="#e8f1f2" />
+            <Label layoutX="127.0" layoutY="173.0" prefHeight="47.0" prefWidth="305.0" text="WMS is a system developed for Managing Warehouses &#10;by the Java team The Knicks for CSCI-2210-01 &#10;" textFill="#e8f1f2" />
+            <Label layoutX="97.0" layoutY="33.0" prefHeight="139.0" prefWidth="366.0" text="Welcome to &#10;Warehouse Manager!" textAlignment="CENTER" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </left>
+   <top>
+      <AnchorPane prefHeight="130.0" prefWidth="200.0" style="-fx-background-color: #24272b;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Logo_Final.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="130.0" prefWidth="1048.0" style="-fx-background-color: #24272b;" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>

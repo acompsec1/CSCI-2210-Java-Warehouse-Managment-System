@@ -3,6 +3,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class WarehouseManagement extends Application {
@@ -12,7 +13,7 @@ public class WarehouseManagement extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Login_screen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("JavaFXML_Files/Login_screen.fxml"));
         stage.setTitle("Warehouse Management");
         stage.setScene(new Scene(root));
         stage.show();

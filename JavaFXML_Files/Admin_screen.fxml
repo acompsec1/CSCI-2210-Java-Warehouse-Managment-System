@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Dashboard">
+<BorderPane id="root" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AdminDashboard">
    <left>
       <AnchorPane fx:id="root" prefHeight="639.0" prefWidth="400.0" style="-fx-background-color: #24272B;" BorderPane.alignment="CENTER">
          <children>
@@ -26,37 +25,57 @@
                   <Image url="@Logo_Long.png" />
                </image>
             </ImageView>
-            <Button layoutX="150.0" layoutY="275.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Add Item" textFill="#e8f1f2">
+            <Button id="addItem" fx:id="itemAdd" layoutX="23.0" layoutY="376.0" mnemonicParsing="false" onAction="#onAddItemClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Add Item" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="150.0" layoutY="325.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Delete Item" textFill="#e8f1f2">
+            <Button layoutX="23.0" layoutY="451.0" mnemonicParsing="false" onAction="#onDeleteItemClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Delete Item" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="150.0" layoutY="375.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Edit Item " textFill="#e8f1f2">
+            <Button layoutX="23.0" layoutY="510.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Edit Item " textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="150.0" layoutY="425.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="People" textFill="#e8f1f2">
+            <Button layoutX="152.0" layoutY="376.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Add User" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="150.0" layoutY="475.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Borrowing " textFill="#e8f1f2">
+            <Button layoutX="23.0" layoutY="559.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Borrow/Rent" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="150.0" layoutY="525.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Settings" textFill="#e8f1f2">
+            <Button layoutX="263.0" layoutY="311.0" mnemonicParsing="false" onAction="#showFavorites" prefHeight="50.0" prefWidth="118.0" style="-fx-background-color: #24272B;" text="Show Favorites" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
             <Button layoutX="150.0" layoutY="225.0" mnemonicParsing="false" onAction="#onSignOutClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Logout" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="list_items" layoutX="23.0" layoutY="311.0" mnemonicParsing="false" onAction="#showItemsClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Show Items" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="list_items1" layoutX="152.0" layoutY="311.0" mnemonicParsing="false" onAction="#showUsersClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Show Users" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="150.0" layoutY="451.0" mnemonicParsing="false" onAction="#onDeleteItemClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Delete User" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="272.0" layoutY="376.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Add Favorite" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -92,19 +111,10 @@
       </MenuBar>
    </top>
    <center>
-      <TableView prefHeight="744.0" prefWidth="678.0" style="-fx-background-color: #4A525A;" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn prefWidth="44.66668701171875" style="-fx-background-color: #25292D;" text="#" />
-          <TableColumn prefWidth="120.0" style="-fx-background-color: #25292D;" text="Category" />
-            <TableColumn prefWidth="160.0" style="-fx-background-color: #25292D;" text="Name" />
-            <TableColumn minWidth="0.0" prefWidth="120.0" style="-fx-background-color: #25292D;" text="Quantity " />
-            <TableColumn prefWidth="120.0" style="-fx-background-color: #25292D;" text="Price" />
-            <TableColumn minWidth="0.0" prefWidth="120.0" style="-fx-background-color: #25292D;" text="Time In" />
-            <TableColumn prefWidth="120.0" style="-fx-background-color: #25292D;" text="Time Out" />
-            <TableColumn prefWidth="220.0" style="-fx-background-color: #25292D;" text="ID #" />
-            <TableColumn prefWidth="120.0" style="-fx-background-color: #25292D;" text="Provider Name" />
-            <TableColumn prefWidth="120.0" style="-fx-background-color: #25292D;" text="Location" />
-        </columns>
+      <TableView id="tableView" fx:id="tableView" editable="true" prefHeight="744.0" prefWidth="678.0" style="-fx-background-color: #4A525A;" BorderPane.alignment="CENTER">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
    </center>
 </BorderPane>

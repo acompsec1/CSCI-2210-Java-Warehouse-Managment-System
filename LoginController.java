@@ -14,7 +14,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Window;
@@ -22,11 +21,10 @@ import javafx.scene.layout.BorderPane;
 
 
 
-public class Login implements Initializable{
+public class LoginController implements Initializable{
 
     @FXML
-    private AnchorPane root;
-    private BorderPane border;
+    private BorderPane rootPane;
 
     @FXML
     private Button signin_btn;
@@ -64,12 +62,12 @@ public class Login implements Initializable{
         Window window = signin_btn.getScene().getWindow();
 
         if (input_uname.getText().isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+            showAlert(AlertType.ERROR, window, "Form Error!",
                     "Please enter your username");
             return;
         }
         if (input_psword.getText().isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, window , "Form Error!",
+            showAlert(AlertType.ERROR, window , "Form Error!",
                     "Please enter a password");
             return;
         }
@@ -85,12 +83,12 @@ public class Login implements Initializable{
         } else {
             Boolean role = database.getRole(username, password);
             if (role){
-                BorderPane pane = FXMLLoader.load(getClass().getResource("Admin_screen.fxml"));
-                root.getChildren().setAll(pane);
+                BorderPane adminPane = FXMLLoader.load(getClass().getResource("JavaFXML_Files/Admin_screen.fxml"));
+                rootPane.getChildren().setAll(adminPane);
             }
             else{
-                AnchorPane pane = FXMLLoader.load(getClass().getResource("Registration_screen.fxml"));
-                root.getChildren().setAll(pane);
+                BorderPane userPane= FXMLLoader.load(getClass().getResource("JavaFXML_Files/User_screen.fxml"));
+                rootPane.getChildren().setAll(userPane);
             }
 //            else{
 //                System.out.print("THIS FAILED");
@@ -111,13 +109,8 @@ public class Login implements Initializable{
 
     @FXML
     void onSignUpClick(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("Registration_screen.fxml"));
-        root.getChildren().setAll(pane);
-//        Parent root1 = (Parent) fxmlLoader.load();
-//        Stage stage = new Stage();
-//        stage.setTitle("Registration");
-//        stage.setScene(new Scene(root1));
-//        stage.show();
+        BorderPane pane = FXMLLoader.load(getClass().getResource("JavaFXML_Files/Registration_screen.fxml"));
+        rootPane.getChildren().setAll(pane);
     }
     @Override
     public void initialize(URL url, ResourceBundle rb){

@@ -73,7 +73,7 @@ public class DatabaseConnector {
 
             while (resultSet.next()) {
                 String value = resultSet.getString(1);
-                System.out.print(value);
+//                System.out.print(value);
                 if (value.equals("1")){
                     return true;
                 }

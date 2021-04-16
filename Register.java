@@ -3,12 +3,9 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.math.BigInteger;
 import java.net.URL;
@@ -17,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 public class Register implements Initializable{
 
@@ -26,7 +24,8 @@ public class Register implements Initializable{
     private Button register_btn;
 
     @FXML
-    private AnchorPane root;
+//    private AnchorPane root;
+    private BorderPane rootPane;
 
     @FXML
     private TextField input_uname;
@@ -42,8 +41,8 @@ public class Register implements Initializable{
 
     @FXML
     void onSignInRegisterClick(ActionEvent event) throws IOException {
-        AnchorPane pane2 = FXMLLoader.load(getClass().getResource("Login_screen.fxml"));
-        root.getChildren().setAll(pane2);
+        BorderPane pane2 = FXMLLoader.load(getClass().getResource("JavaFXML_Files/Login_screen.fxml"));
+        rootPane.getChildren().setAll(pane2);
     }
 
     @FXML
