@@ -50,7 +50,7 @@
          <children>
             <AnchorPane prefHeight="462.0" prefWidth="573.0" style="-fx-background-color: #E8F1F2; -fx-border-color: #157F1F; -fx-border-width: 5px; -fx-border-radius: 22; -fx-background-radius: 25;">
                <children>
-                  <Button id="signin_btn" fx:id="register_btn" layoutX="137.0" layoutY="349.0" mnemonicParsing="false" onAction="#onSignInClick" prefHeight="36.0" prefWidth="305.0" style="-fx-background-color: #157F1F; -fx-background-radius: 25px;" text="Sign Up" textFill="WHITE">
+                  <Button id="signin_btn" fx:id="register_btn" layoutX="137.0" layoutY="349.0" mnemonicParsing="false" onAction="#onSignUpClick" prefHeight="36.0" prefWidth="305.0" style="-fx-background-color: #157F1F; -fx-background-radius: 25px;" text="Sign Up" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
