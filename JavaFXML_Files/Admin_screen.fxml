@@ -5,13 +5,15 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane id="root" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AdminDashboard">
+<BorderPane id="root" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="712.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AdminDashboard">
    <left>
       <AnchorPane fx:id="root" prefHeight="639.0" prefWidth="400.0" style="-fx-background-color: #24272B;" BorderPane.alignment="CENTER">
          <children>
@@ -25,32 +27,32 @@
                   <Image url="@Logo_Long.png" />
                </image>
             </ImageView>
-            <Button id="addItem" fx:id="itemAdd" layoutX="23.0" layoutY="376.0" mnemonicParsing="false" onAction="#onAddItemClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Add Item" textFill="#e8f1f2">
+            <Button id="addItem" fx:id="itemAdd" layoutX="29.0" layoutY="335.0" mnemonicParsing="false" onAction="#onAddItemClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Add Item" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="23.0" layoutY="451.0" mnemonicParsing="false" onAction="#onDeleteItemClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Delete Item" textFill="#e8f1f2">
+            <Button fx:id="itemDelete" layoutX="29.0" layoutY="377.0" mnemonicParsing="false" onAction="#onDeleteItemClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Delete Item" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="23.0" layoutY="510.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Edit Item " textFill="#e8f1f2">
+            <Button fx:id="editItem" layoutX="29.0" layoutY="425.0" mnemonicParsing="false" onAction="#onEditItemClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Edit Item " textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="152.0" layoutY="376.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Add User" textFill="#e8f1f2">
+            <Button fx:id="userAdd" layoutX="158.0" layoutY="335.0" mnemonicParsing="false" onAction="#onAddUser" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Add User" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="23.0" layoutY="559.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Borrow/Rent" textFill="#e8f1f2">
+            <Button fx:id="borrow_rent_button" layoutX="24.0" layoutY="474.0" mnemonicParsing="false" onAction="#onBorrow" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #24272B;" text="Borrow/Rent Request" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="263.0" layoutY="311.0" mnemonicParsing="false" onAction="#showFavorites" prefHeight="50.0" prefWidth="118.0" style="-fx-background-color: #24272B;" text="Show Favorites" textFill="#e8f1f2">
+            <Button fx:id="list_favorites" layoutX="269.0" layoutY="285.0" mnemonicParsing="false" onAction="#showFavorites" prefHeight="50.0" prefWidth="118.0" style="-fx-background-color: #24272B;" text="Show Favorites" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -60,22 +62,37 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="list_items" layoutX="23.0" layoutY="311.0" mnemonicParsing="false" onAction="#showItemsClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Show Items" textFill="#e8f1f2">
+            <Button fx:id="list_items" layoutX="29.0" layoutY="285.0" mnemonicParsing="false" onAction="#showItemsClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Show Items" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="list_items1" layoutX="152.0" layoutY="311.0" mnemonicParsing="false" onAction="#showUsersClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Show Users" textFill="#e8f1f2">
+            <Button fx:id="list_users" layoutX="158.0" layoutY="285.0" mnemonicParsing="false" onAction="#showUsersClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Show Users" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="150.0" layoutY="451.0" mnemonicParsing="false" onAction="#onDeleteItemClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Delete User" textFill="#e8f1f2">
+            <Button fx:id="userDelete" layoutX="158.0" layoutY="377.0" mnemonicParsing="false" onAction="#onDeleteUser" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Delete User" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="272.0" layoutY="376.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Add Favorite" textFill="#e8f1f2">
+            <Button fx:id="favoriteAdd" layoutX="269.0" layoutY="335.0" mnemonicParsing="false" onAction="#onAddFavorite" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Add Favorite" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="userEdit" layoutX="158.0" layoutY="425.0" mnemonicParsing="false" onAction="#onEditUser" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Edit User" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="favoriteDelete" layoutX="269.0" layoutY="377.0" mnemonicParsing="false" onAction="#onDeleteFavorite" prefHeight="50.0" prefWidth="114.0" style="-fx-background-color: #24272B;" text="Delete Favorite" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="accept_reject_button" layoutX="208.0" layoutY="474.0" mnemonicParsing="false" onAction="#onAcceptReject" prefHeight="50.0" prefWidth="161.0" style="-fx-background-color: #24272B;" text="Accept/Reject Request" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -111,10 +128,34 @@
       </MenuBar>
    </top>
    <center>
-      <TableView id="tableView" fx:id="tableView" editable="true" prefHeight="744.0" prefWidth="678.0" style="-fx-background-color: #4A525A;" BorderPane.alignment="CENTER">
+      <TableView id="tableView" fx:id="tableView" editable="true" prefHeight="522.0" prefWidth="680.0" style="-fx-background-color: #4A525A;" BorderPane.alignment="CENTER">
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
    </center>
+   <bottom>
+      <AnchorPane prefHeight="124.0" prefWidth="1080.0" style="-fx-background-color: #24272B #24272B;" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="username_field" layoutX="130.0" layoutY="17.0" prefHeight="26.0" prefWidth="85.0" promptText="Username" />
+            <TextField fx:id="password_field" layoutX="225.0" layoutY="17.0" promptText="Password" />
+            <TextField fx:id="role_field" layoutX="396.0" layoutY="17.0" prefHeight="26.0" prefWidth="142.0" promptText="Role (0: User, 1: Admin)" />
+            <TextField fx:id="user_id_field" layoutX="54.0" layoutY="17.0" prefHeight="26.0" prefWidth="69.0" promptText="USER_ID" />
+            <Text fill="WHITE" layoutX="12.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Users:" />
+            <TextField fx:id="category_field" layoutX="130.0" layoutY="76.0" prefHeight="26.0" prefWidth="85.0" promptText="Category" />
+            <TextField fx:id="item_name_field" layoutX="225.0" layoutY="76.0" prefHeight="26.0" prefWidth="110.0" promptText="Name" />
+            <TextField fx:id="number_items" layoutX="345.0" layoutY="76.0" prefHeight="26.0" prefWidth="72.0" promptText="# of items" />
+            <TextField fx:id="item_field" layoutX="54.0" layoutY="76.0" prefHeight="26.0" prefWidth="69.0" promptText="ITEM_ID" />
+            <Text fill="WHITE" layoutX="11.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items:" />
+            <TextField fx:id="price_field" layoutX="425.0" layoutY="76.0" prefHeight="26.0" prefWidth="81.0" promptText="\$$$ (price)" />
+            <TextField fx:id="time_in_field" layoutX="515.0" layoutY="76.0" prefHeight="26.0" prefWidth="165.0" promptText="HH:MM:SS MM/DD/YYYY" />
+            <Text fill="WHITE" layoutX="565.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time In" />
+            <TextField fx:id="time_out_field" layoutX="685.0" layoutY="76.0" prefHeight="26.0" prefWidth="165.0" promptText="HH:MM:SS MM/DD/YYYY" />
+            <Text fill="WHITE" layoutX="735.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Out" />
+            <TextField fx:id="request_id_field" layoutX="673.0" layoutY="15.0" prefHeight="26.0" prefWidth="93.0" promptText="REQUEST_ID" />
+            <Text fill="WHITE" layoutX="612.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Requests:" />
+            <TextField fx:id="accept_reject_field" layoutX="775.0" layoutY="15.0" prefHeight="26.0" prefWidth="93.0" promptText="Accept/Reject" />
+         </children>
+      </AnchorPane>
+   </bottom>
 </BorderPane>

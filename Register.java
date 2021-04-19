@@ -39,8 +39,8 @@ public class Register implements Initializable{
     @FXML
     private PasswordField input_psword2;
 
-    @FXML
-    private Button signin_btn_register;
+//    @FXML
+//    private Button signin_btn_register;
 
     @FXML
     void onSignInRegisterClick(ActionEvent event) throws IOException {
@@ -58,50 +58,22 @@ public class Register implements Initializable{
 
     }
 
-    public static void infoBox(String infoMessage, String headerText, String title) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setContentText(infoMessage);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.showAndWait();
-    }
-
-    public static String getMD5(String password)
-    {
-        MessageDigest md;
-        try {
-            md = MessageDigest.getInstance("MD5");
-
-            byte[] messageDigest = md.digest(password.getBytes());
-            BigInteger no = new BigInteger(1, messageDigest);
-            String hashtext = no.toString(16);
-            while(hashtext.length() < 32) {
-                hashtext = "0" + hashtext;
-            }
-            return hashtext;
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Source: https://www.geeksforgeeks.org/md5-hash-in-java/
-    }
-
     public void onSignUpClick(ActionEvent event) throws Exception {
         DatabaseConnector database = new DatabaseConnector();
         Window window = register_btn.getScene().getWindow();
 
         if (input_uname.getText().isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
                     "Please enter your username");
             return;
         }
         if (input_psword1.getText().isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, window , "Form Error!",
+            database.showAlert(Alert.AlertType.ERROR, window , "Form Error!",
                     "Please enter a password");
             return;
         }
         if (input_psword2.getText().isEmpty()){
-            showAlert(Alert.AlertType.ERROR, window , "Form Error!",
+            database.showAlert(Alert.AlertType.ERROR, window , "Form Error!",
                     "Please confirm password");
             return;
         }
@@ -110,8 +82,8 @@ public class Register implements Initializable{
         String password1 = input_psword1.getText();
         String password2 = input_psword2.getText();
 
-        if (!(password1.equals(password1))){
-            showAlert(Alert.AlertType.ERROR, window , "Form Error!",
+        if (!(password1.equals(password2))){
+            database.showAlert(Alert.AlertType.ERROR, window , "Form Error!",
                     "Passwords do not match!");
             return;
         }
@@ -119,23 +91,19 @@ public class Register implements Initializable{
             boolean flag = database.userExists(username);
 
             if (flag) {
-                infoBox("Username already exists", null, "Failed");
+                database.infoBox("Username already exists", null, "Failed");
             }
             else {
-                System.out.println("WILL CREATE USER HERE");
+                String password = database.getMD5(password1);
+                database.create(username, password, 0);
+                input_uname.clear();
+                input_psword1.clear();
+                input_psword2.clear();
+
             }
 
         }
 
     }
 
-    private static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.initOwner(owner);
-        alert.show();
-
-    }
 }

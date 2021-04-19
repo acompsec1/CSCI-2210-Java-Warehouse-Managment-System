@@ -1,3 +1,6 @@
+import javafx.scene.control.Alert;
+import javafx.stage.Window;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,7 +18,17 @@ public class DatabaseConnector {
     private static final String SELECT_QUERY = "SELECT * FROM users WHERE username = ? and password_hash = ?";
     private static final String ROLE_QUERY = "SELECT role_id FROM users WHERE username = ? and password_hash = ?";
     private static final String USER_QUERY = "SELECT username FROM users WHERE username = ?";
-    private static final String CREATEUSER_QUERY = "Insert into " ;
+    private static final String CREATEUSER_QUERY = "Insert INTO users (username, password_hash, role_id) VALUES (?,?,?)";
+    private static final String DELETE_USER = "DELETE FROM users WHERE ID = ? and username = ?";
+    private static final String FIND_USER = "Select username from users where ID = ?";
+
+    public static void infoBox(String infoMessage, String headerText, String title) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(infoMessage);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.showAndWait();
+    }
 
     public static Connection getConnection() throws SQLException{
         try{
@@ -126,35 +139,82 @@ public class DatabaseConnector {
         return false;
     }
 
-    public boolean create(String usernameId, String password) throws Exception{
+    public boolean create(String usernameId, String password, Integer role) throws Exception{
 
         // Step 1: Establishing a Connection and
         // try-with-resource statement will auto close the connection.
         Connection con = getConnection();
         try (
-
                 // Step 2:Create a statement using connection object
                 PreparedStatement preparedStatement = con.prepareStatement(CREATEUSER_QUERY)) {
             preparedStatement.setString(1, usernameId);
+            preparedStatement.setString(2, password);
+            preparedStatement.setInt(3, role);
 
 //            System.out.println(preparedStatement);
 
+            //EXECUTE THE QUERY
+            preparedStatement.executeUpdate();
+            infoBox("Username created!", null, "Success!");
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            printSQLException(e);
+        }
+        return false;
+    }
+
+    public boolean deleteUser(Integer user_Id, String username) throws Exception{
+
+        // Step 1: Establishing a Connection and
+        // try-with-resource statement will auto close the connection.
+        Connection con = getConnection();
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(DELETE_USER)) {
+            preparedStatement.setInt(1, user_Id);
+            preparedStatement.setString(2,username);
+//            System.out.println(preparedStatement);
+
+            //EXECUTE THE QUERY
+            preparedStatement.executeUpdate();
+            infoBox("User deleted!", null, "Success!");
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            System.out.print("FAILED TO EXECUTE DELETE PROPERLY");
+            printSQLException(e);
+        }
+        return false;
+    }
+
+    public boolean getUsername(Integer user_ID, String username) throws Exception{
+        Connection con = getConnection();
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(FIND_USER)) {
+            preparedStatement.setInt(1, user_ID);
+
+//            System.out.println(preparedStatement);
+
+            //EXECUTE THE QUERY
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 String value = resultSet.getString(1);
-//                System.out.print(value);
-                if (value.equals(usernameId)){
+
+                if (value.equals(username)){
                     return true;
                 }
                 else{
                     return false;
                 }
+//
             }
-
 
         } catch (SQLException e) {
             // print SQL exception information
+            System.out.print("FAILED TO EXECUTE USERNAME SEARCH PROPERLY");
             printSQLException(e);
         }
         return false;
@@ -177,6 +237,34 @@ public class DatabaseConnector {
         }
     }
 
+    public static String getMD5(String password)
+    {
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("MD5");
 
+            byte[] messageDigest = md.digest(password.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashtext = no.toString(16);
+            while(hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Source: https://www.geeksforgeeks.org/md5-hash-in-java/
+    }
+
+    public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(owner);
+        alert.show();
+
+    }
 
 }
