@@ -1,4 +1,6 @@
--- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `wmdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `wmdb`;
+-- MySQL dump 10.13  Distrib 8.0.22, for macos10.15 (x86_64)
 --
 -- Host: 127.0.0.1    Database: wmdb
 -- ------------------------------------------------------
@@ -23,17 +25,15 @@ DROP TABLE IF EXISTS `borrowed_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `borrowed_items` (
-  `BORROW_REQUEST` int NOT NULL,
+  `BORROW_REQUEST` int NOT NULL AUTO_INCREMENT,
   `item_id` int DEFAULT NULL,
   `amount` int DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   `borrow_date` datetime DEFAULT NULL,
   `return_date` datetime DEFAULT NULL,
   PRIMARY KEY (`BORROW_REQUEST`),
-  KEY `ITEMID_idx` (`item_id`),
   KEY `USERID_idx` (`user_id`),
-  CONSTRAINT `ITEMID` FOREIGN KEY (`item_id`) REFERENCES `items` (`ITEMID`),
-  CONSTRAINT `USERID` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`)
+  CONSTRAINT `USERID` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -54,7 +54,7 @@ DROP TABLE IF EXISTS `favorites`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `favorites` (
-  `FAVORITEID` int NOT NULL,
+  `FAVORITEID` int NOT NULL AUTO_INCREMENT,
   `item_id` int DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   PRIMARY KEY (`FAVORITEID`),
@@ -62,8 +62,8 @@ CREATE TABLE `favorites` (
   KEY `FAVITEMID_idx` (`item_id`),
   KEY `USER_ID_idx` (`user_id`),
   CONSTRAINT `FAVITEMID` FOREIGN KEY (`item_id`) REFERENCES `items` (`ITEMID`),
-  CONSTRAINT `USER_ID` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `USER_ID` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,6 +72,7 @@ CREATE TABLE `favorites` (
 
 LOCK TABLES `favorites` WRITE;
 /*!40000 ALTER TABLE `favorites` DISABLE KEYS */;
+INSERT INTO `favorites` VALUES (1,1,1),(2,1,2);
 /*!40000 ALTER TABLE `favorites` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,6 +103,7 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
+INSERT INTO `items` VALUES (1,'Cars','Ferrari',1,400000,'2021-04-14 05:30:00','2021-06-05 04:20:00','Ferrari','Italy');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,6 +128,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (0,'user','least privileges'),(1,'admin','all privileges');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,14 +140,14 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
   `username` varchar(45) DEFAULT NULL,
   `password_hash` varchar(45) DEFAULT NULL,
   `role_id` int DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `ROLEID_idx` (`role_id`),
   CONSTRAINT `ROLEID` FOREIGN KEY (`role_id`) REFERENCES `roles` (`ROLEID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,6 +156,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'ajmahr','827ccb0eea8a706c4c34a16891f84e7b',1),(2,'user','5f4dcc3b5aa765d61d8327deb882cf99',0),(3,'test','098f6bcd4621d373cade4e832627b4f6',1),(4,'test2','098f6bcd4621d373cade4e832627b4f6',0),(5,'test3','098f6bcd4621d373cade4e832627b4f6',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -165,4 +169,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-07 17:49:48
+-- Dump completed on 2021-04-19 11:09:08
