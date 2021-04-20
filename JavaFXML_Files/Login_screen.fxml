@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: # #24272B; -fx-border-color: #000000;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login">
+<BorderPane id="root" fx:id="rootPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #24272B; -fx-border-color: #000000;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginController">
    <right>
       <AnchorPane prefHeight="549.0" prefWidth="520.0" style="-fx-background-color: #24272b;" BorderPane.alignment="CENTER">
          <children>
@@ -66,9 +65,9 @@
    <top>
       <AnchorPane prefHeight="130.0" prefWidth="200.0" style="-fx-background-color: #24272b;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="207.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../Downloads/Logo_Final.png" />
+                  <Image url="@Logo_Final.png" />
                </image>
             </ImageView>
          </children>
