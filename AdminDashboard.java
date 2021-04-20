@@ -102,6 +102,10 @@ public class AdminDashboard implements Initializable {
 
     @FXML
     void showUsersClick(ActionEvent event) throws Exception{
+        showUsers();
+    }
+
+    void showUsers() throws Exception{
         DynamicTableView table = new DynamicTableView();
         table.buildData(rootPane, tableView, "users");
     }
@@ -153,6 +157,7 @@ public class AdminDashboard implements Initializable {
             password_field.clear();
             role_field.clear();
         }
+        showUsers();
     }
 
     public void onAcceptReject(ActionEvent event) {
