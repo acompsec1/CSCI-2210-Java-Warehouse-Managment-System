@@ -105,6 +105,7 @@ public class AdminDashboard implements Initializable {
         showUsers();
     }
 
+    // Updates our table
     void showUsers() throws Exception{
         DynamicTableView table = new DynamicTableView();
         table.buildData(rootPane, tableView, "users");
@@ -227,7 +228,7 @@ public class AdminDashboard implements Initializable {
         else {
             database.infoBox("This username or ID does not exist, please check your data entries.", null, "Failed");
         }
-
+        showUsers();
     }
 
     public void onAddFavorite(ActionEvent event) {
@@ -266,7 +267,7 @@ public class AdminDashboard implements Initializable {
         else {
             database.infoBox("This username or ID does not exist, please check your data entries.", null, "Failed");
         }
-
+        showUsers();
     }
 
     public void onBorrow(ActionEvent event) {
