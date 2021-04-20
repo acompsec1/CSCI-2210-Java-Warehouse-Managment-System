@@ -21,6 +21,10 @@ public class DatabaseConnector {
     private static final String CREATEUSER_QUERY = "Insert INTO users (username, password_hash, role_id) VALUES (?,?,?)";
     private static final String DELETE_USER = "DELETE FROM users WHERE ID = ? and username = ?";
     private static final String FIND_USER = "Select username from users where ID = ?";
+    private static final String UPDATE_USER_PASSWORD = "UPDATE users SET password_hash = ? where ID = ?";
+    private static final String UPDATE_USER_ROLE = "UPDATE users set role_id = ? where ID = ?";
+    private static final String UPDATE_USER_BOTH = "Update users set role_id = ?, password_hash = ? where ID = ?";
+
 
     public static void infoBox(String infoMessage, String headerText, String title) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -188,6 +192,72 @@ public class DatabaseConnector {
         return false;
     }
 
+    public boolean updateUser(Integer user_Id, String username, String password, Integer role, String option) throws Exception{
+        // Step 1: Establishing a Connection and
+        // try-with-resource statement will auto close the connection.
+        Connection con = getConnection();
+        if (option.equals("password")) {
+            try (
+                    // Step 2:Create a statement using connection object
+                    PreparedStatement preparedStatement = con.prepareStatement(UPDATE_USER_PASSWORD)) {
+                preparedStatement.setString(1, password);
+                preparedStatement.setInt(2,user_Id);
+//            System.out.println(preparedStatement);
+
+                //EXECUTE THE QUERY
+                preparedStatement.executeUpdate();
+                infoBox("User password updated!", null, "Success!");
+
+            } catch (SQLException e) {
+                // print SQL exception information
+                System.out.print("FAILED TO EXECUTE UPDATE PROPERLY");
+                printSQLException(e);
+            }
+            return false;
+        }
+
+        if (option.equals("role")){
+            try (
+                    // Step 2:Create a statement using connection object
+                    PreparedStatement preparedStatement = con.prepareStatement(UPDATE_USER_ROLE)) {
+                preparedStatement.setInt(1, role);
+                preparedStatement.setInt(2, user_Id);
+//            System.out.println(preparedStatement);
+
+                //EXECUTE THE QUERY
+                preparedStatement.executeUpdate();
+                infoBox("User role updated!", null, "Success!");
+
+            } catch (SQLException e) {
+                // print SQL exception information
+                System.out.print("FAILED TO EXECUTE UPDATE PROPERLY");
+                printSQLException(e);
+            }
+            return false;
+        }
+        if (option.equals("both")){
+            try (
+                    // Step 2:Create a statement using connection object
+                    PreparedStatement preparedStatement = con.prepareStatement(UPDATE_USER_BOTH)) {
+                preparedStatement.setInt(1, role);
+                preparedStatement.setString(2,password);
+                preparedStatement.setInt(3, user_Id);
+//            System.out.println(preparedStatement);
+
+                //EXECUTE THE QUERY
+                preparedStatement.executeUpdate();
+                infoBox("User password and role updated!", null, "Success!");
+
+            } catch (SQLException e) {
+                // print SQL exception information
+                System.out.print("FAILED TO EXECUTE DELETE PROPERLY");
+                printSQLException(e);
+            }
+            return false;
+        }
+        return false;
+    }
+
     public boolean getUsername(Integer user_ID, String username) throws Exception{
         Connection con = getConnection();
         try (
@@ -264,7 +334,6 @@ public class DatabaseConnector {
         alert.setContentText(message);
         alert.initOwner(owner);
         alert.show();
-
     }
 
 }

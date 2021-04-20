@@ -161,7 +161,68 @@ public class AdminDashboard implements Initializable {
     public void onDeleteFavorite(ActionEvent event) {
     }
 
-    public void onEditUser(ActionEvent event) {
+    public void onEditUser(ActionEvent event) throws Exception {
+        DatabaseConnector database = new DatabaseConnector();
+        Window window = userDelete.getScene().getWindow();
+
+        if (user_id_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the ID of the user you wish to delete");
+            return;
+        }
+        if (username_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the username of the user you wish to delete");
+            return;
+        }
+
+        if (password_field.getText().isEmpty() && role_field.getText().isEmpty()){
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter a new password to update the password or a role id to change the role");
+            return;
+        }
+
+        String options;
+        if (!password_field.getText().isEmpty() && role_field.getText().isEmpty()){
+            options = "password";
+        }
+        else if (password_field.getText().isEmpty() && !role_field.getText().isEmpty()){
+            options = "role";
+        }
+        else {
+            options = "both";
+        }
+
+        Integer userID = Integer.parseInt(user_id_field.getText());
+        String username = username_field.getText();
+
+        boolean flag = database.userExists(username);
+        boolean user_info_matches = database.getUsername(userID, username);
+        Integer role;
+        String hashed_password;
+        if (flag) {
+            if (user_info_matches) {
+                String password = password_field.getText();
+                try {
+                    role = Integer.parseInt(role_field.getText());
+                }catch(NumberFormatException e){
+                    role = 0;
+                }
+                hashed_password = database.getMD5(password);
+                database.updateUser(userID, username, hashed_password, role, options);
+                password_field.clear();
+                role_field.clear();
+                username_field.clear();
+                user_id_field.clear();
+            }
+            else {
+                database.infoBox("The username entered is not associated with the ID entered. Please ensure user data matches correctly.", null, "Failed");
+            }
+        }
+        else {
+            database.infoBox("This username or ID does not exist, please check your data entries.", null, "Failed");
+        }
+
     }
 
     public void onAddFavorite(ActionEvent event) {
