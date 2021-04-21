@@ -50,6 +50,8 @@ public class AdminDashboard implements Initializable {
     public Button userAdd;
     public Button itemDelete;
     public Button show_borrow_rent;
+    public TextField provider;
+    public TextField location;
 
     @FXML
     private BorderPane rootPane;
