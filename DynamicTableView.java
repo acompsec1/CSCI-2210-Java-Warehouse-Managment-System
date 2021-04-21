@@ -47,12 +47,15 @@ public class DynamicTableView {
                 sqlQuery = "SELECT * from users";
             }
             else if (option.equals("borrowed")) {
-                sqlQuery = "SELECT * from borrow_items";
+                sqlQuery = "SELECT * from borrowed_items";
 //                ResultSet rs = c.createStatement().executeQuery(sqlQuery);
             }
             else if (option.equals("items")) {
                 sqlQuery = "SELECT * from items";
 //                ResultSet rs = c.createStatement().executeQuery(sqlQuery);
+            }
+            else if (option.equals("borrowed")){
+                sqlQuery = "Select * from borrowed_items";
             }
             else{
                 System.out.println("There was an error setting the query statement");

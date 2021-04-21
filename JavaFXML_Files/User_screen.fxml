@@ -47,7 +47,7 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
-            <Button layoutX="33.0" layoutY="360.0" mnemonicParsing="false" onAction="#onRequestClick" prefHeight="50.0" prefWidth="147.0" style="-fx-background-color: #24272B;" text="Request to Borrow" textFill="#e8f1f2">
+            <Button fx:id="request_button" layoutX="33.0" layoutY="360.0" mnemonicParsing="false" onAction="#onRequestClick" prefHeight="50.0" prefWidth="147.0" style="-fx-background-color: #24272B;" text="Request to Borrow" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -104,11 +104,14 @@
          <children>
             <TextField fx:id="username_field" layoutX="67.0" layoutY="12.0" prefHeight="25.0" prefWidth="83.0" promptText="username" />
             <Text fill="WHITE" layoutX="2.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" />
-            <TextField fx:id="id_number_field" layoutX="168.0" layoutY="12.0" prefHeight="25.0" prefWidth="104.0" promptText="Item ID Number" />
+            <TextField fx:id="item_id_field" layoutX="168.0" layoutY="12.0" prefHeight="25.0" prefWidth="104.0" promptText="Item ID Number" />
+            <Text fill="WHITE" layoutX="713.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time In" wrappingWidth="72.21630859375" />
             <TextField fx:id="item_name_field" layoutX="283.0" layoutY="12.0" promptText="Item Name" />
-            <TextField fx:id="time_in_field" layoutX="619.0" layoutY="12.0" prefHeight="25.0" prefWidth="218.0" promptText="Time - In (HH:MM:SS MM/DD/YYYY)" />
-            <TextField fx:id="time_out_field" layoutX="842.0" layoutY="12.0" prefHeight="25.0" prefWidth="232.0" promptText="Time - Out (HH:MM:SS MM/DD/YYYY)" />
-            <TextField fx:id="item_producer_field" layoutX="452.0" layoutY="12.0" promptText="Item Producer" />
+            <TextField fx:id="time_in_field" layoutX="662.0" layoutY="12.0" prefHeight="25.0" prefWidth="175.0" promptText="(HH:MM:SS MM/DD/YYYY)" />
+            <TextField fx:id="time_out_field" layoutX="842.0" layoutY="12.0" prefHeight="25.0" prefWidth="173.0" promptText="(HH:MM:SS MM/DD/YYYY)" />
+            <TextField fx:id="item_producer_field" layoutX="452.0" layoutY="12.0" prefHeight="25.0" prefWidth="105.0" promptText="Item Producer" />
+            <Text fill="WHITE" layoutX="907.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Out" />
+            <TextField fx:id="number_of_items" disable="true" layoutX="570.0" layoutY="12.0" prefHeight="25.0" prefWidth="83.0" promptText="# of items" />
          </children>
       </AnchorPane>
    </bottom>
