@@ -24,6 +24,9 @@ public class DatabaseConnector {
     private static final String UPDATE_USER_PASSWORD = "UPDATE users SET password_hash = ? where ID = ?";
     private static final String UPDATE_USER_ROLE = "UPDATE users set role_id = ? where ID = ?";
     private static final String UPDATE_USER_BOTH = "Update users set role_id = ?, password_hash = ? where ID = ?";
+    private static final String CREATE_BORROW_REQUEST = "INSERT INTO borrowed_items (item_id, amount, user_id, borrow_date, return_date) VALUES (?, 1, ?, STR_TO_DATE(?, \"%H:%i:%s %d/%m/%Y\"), STR_TO_DATE(?,\"%H:%i:%s %d/%m/%Y\"))";
+    private static final String ITEM_QUERY = "Select ITEMID from items where ITEMID = ?";
+    private static final String USERID_QUERY = "Select ID from users where username = ?";
 
 
     public static void infoBox(String infoMessage, String headerText, String title) {
@@ -74,6 +77,95 @@ public class DatabaseConnector {
         return false;
     }
 
+    public boolean userExists(String usernameId) throws Exception{
+
+        // Step 1: Establishing a Connection and
+        // try-with-resource statement will auto close the connection.
+        Connection con = getConnection();
+        try (
+
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(USER_QUERY)) {
+            preparedStatement.setString(1, usernameId);
+
+//            System.out.println(preparedStatement);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String value = resultSet.getString(1);
+//                System.out.print(value);
+                if (value.equals(usernameId)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            printSQLException(e);
+        }
+        return false;
+    }
+
+    public boolean getUsername(Integer user_ID, String username) throws Exception{
+        Connection con = getConnection();
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(FIND_USER)) {
+            preparedStatement.setInt(1, user_ID);
+
+//            System.out.println(preparedStatement);
+
+            //EXECUTE THE QUERY
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String value = resultSet.getString(1);
+
+                if (value.equals(username)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+//
+            }
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            System.out.print("FAILED TO EXECUTE USERNAME SEARCH PROPERLY");
+            printSQLException(e);
+        }
+        return false;
+    }
+
+    public int getUserID(String username) throws SQLException{
+        Connection con = getConnection();
+        Integer value = 0;
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(USERID_QUERY)) {
+            preparedStatement.setString(1, username);
+
+//            System.out.println(preparedStatement);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                value = Integer.parseInt(resultSet.getString(1));
+            }
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            printSQLException(e);
+        }
+        return value;
+    }
+
     public boolean getRole(String usernameId, String password) throws SQLException{
 
         // Step 1: Establishing a Connection and
@@ -94,40 +186,6 @@ public class DatabaseConnector {
                 String value = resultSet.getString(1);
 //                System.out.print(value);
                 if (value.equals("1")){
-                    return true;
-                }
-                else{
-                    return false;
-                }
-            }
-
-
-        } catch (SQLException e) {
-            // print SQL exception information
-            printSQLException(e);
-        }
-        return false;
-    }
-
-    public boolean userExists(String usernameId) throws Exception{
-
-        // Step 1: Establishing a Connection and
-        // try-with-resource statement will auto close the connection.
-        Connection con = getConnection();
-        try (
-
-                // Step 2:Create a statement using connection object
-                PreparedStatement preparedStatement = con.prepareStatement(USER_QUERY)) {
-            preparedStatement.setString(1, usernameId);
-
-//            System.out.println(preparedStatement);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                String value = resultSet.getString(1);
-//                System.out.print(value);
-                if (value.equals(usernameId)){
                     return true;
                 }
                 else{
@@ -258,38 +316,97 @@ public class DatabaseConnector {
         return false;
     }
 
-    public boolean getUsername(Integer user_ID, String username) throws Exception{
+    public boolean getItem(Integer id_item) throws SQLException {
         Connection con = getConnection();
         try (
+
                 // Step 2:Create a statement using connection object
-                PreparedStatement preparedStatement = con.prepareStatement(FIND_USER)) {
-            preparedStatement.setInt(1, user_ID);
+                PreparedStatement preparedStatement = con.prepareStatement(ITEM_QUERY)) {
+            preparedStatement.setInt(1, id_item);
 
 //            System.out.println(preparedStatement);
 
-            //EXECUTE THE QUERY
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                String value = resultSet.getString(1);
-
-                if (value.equals(username)){
+                Integer value = Integer.parseInt(resultSet.getString(1));
+//                System.out.print(value);
+                if (value.equals(id_item)){
                     return true;
                 }
                 else{
                     return false;
                 }
-//
             }
+
 
         } catch (SQLException e) {
             // print SQL exception information
-            System.out.print("FAILED TO EXECUTE USERNAME SEARCH PROPERLY");
             printSQLException(e);
         }
         return false;
     }
 
+    public boolean createRequest(Integer user_id, Integer item_id, String time_in, String time_out) throws SQLException {
+        Connection con = getConnection();
+
+
+//        String in_time = time_in.split(" ", 3)[0];
+//        String in_date = time_in.split(" ", 3)[1];
+//
+//        String hours_in = in_time.split(":", 3)[0];
+//        String minutes_in = in_time.split(":", 3)[1];
+//        String seconds_in = in_time.split(":", 3)[2];
+//
+//        String month_in = in_date.split("/",3)[0];
+//        String day_in = in_date.split("/", 3)[1];
+//        String year_in = in_date.split("/", 3)[2];
+//
+//        String out_time = time_out.split(" ", 3)[0];
+//        String out_date = time_out.split(" ", 3)[1];
+//
+//        String hours_out = out_time.split(":", 3)[0];
+//        String minutes_out = out_time.split(":", 3)[1];
+//        String seconds_out = out_time.split(":", 3)[2];
+//
+//        String month_out = out_date.split("/",3)[0];
+//        String day_out = out_date.split("/", 3)[1];
+//        String year_out = out_date.split("/", 3)[2];
+//
+//        System.out.println("ORIGINAL TIME IN " + time_in);
+//        System.out.println("ORIGINAL TIME OUT " + time_out);
+//        System.out.println("Hours In: " + hours_in);
+//        System.out.println("Minutes In: " + minutes_in);
+//        System.out.println("Seconds In: " + seconds_in);
+//        System.out.println("Month In: " + month_in);
+//        System.out.println("Day In: "+ day_in);
+//        System.out.println("Year In: " + year_in);
+//        System.out.println("Hours Out: " + hours_out);
+//        System.out.println("Minutes Out: "+ minutes_out);
+//        System.out.println("Seconds Out: " + seconds_out);
+//        System.out.println("Month Out: "+ month_out);
+//        System.out.println("Day Out: " + day_out);
+//        System.out.println("Year Out: " + year_out);
+
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(CREATE_BORROW_REQUEST)) {
+            preparedStatement.setInt(1, item_id);
+            preparedStatement.setInt(2, user_id);
+            preparedStatement.setString(3, time_in);
+            preparedStatement.setString(4, time_out);
+
+            //EXECUTE THE QUERY
+            preparedStatement.executeUpdate();
+            infoBox("Borrow Request Created!", null, "Success!");
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            System.out.print("FAILED TO EXECUTE CREATE REQUEST PROPERLY");
+            printSQLException(e);
+        }
+        return false;
+    }
 
     public static void printSQLException(SQLException ex) {
         for (Throwable e : ex) {

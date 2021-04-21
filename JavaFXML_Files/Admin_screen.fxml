@@ -47,7 +47,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="borrow_rent_button" layoutX="24.0" layoutY="474.0" mnemonicParsing="false" onAction="#onBorrow" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #24272B;" text="Borrow/Rent Request" textFill="#e8f1f2">
+            <Button fx:id="borrow_rent_button" layoutX="218.0" layoutY="465.0" mnemonicParsing="false" onAction="#onBorrowRequest" prefHeight="50.0" prefWidth="170.0" style="-fx-background-color: #24272B;" text="Borrow/Rent Request" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -92,7 +92,12 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="accept_reject_button" layoutX="208.0" layoutY="474.0" mnemonicParsing="false" onAction="#onAcceptReject" prefHeight="50.0" prefWidth="161.0" style="-fx-background-color: #24272B;" text="Accept/Reject Request" textFill="#e8f1f2">
+            <Button fx:id="accept_reject_button" layoutX="128.0" layoutY="507.0" mnemonicParsing="false" onAction="#onAcceptReject" prefHeight="50.0" prefWidth="161.0" style="-fx-background-color: #24272B;" text="Accept/Reject Request" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="show_borrow_rent" layoutX="22.0" layoutY="466.0" mnemonicParsing="false" onAction="#onShowBorrow" prefHeight="50.0" prefWidth="188.0" style="-fx-background-color: #24272B;" text="Show Borrow/Rent Requests" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

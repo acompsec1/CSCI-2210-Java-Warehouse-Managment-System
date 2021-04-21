@@ -5,11 +5,13 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane id="rootPane" fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UserDashboard">
     <left>
@@ -25,12 +27,12 @@
                         <Image url="@Logo_Long.png" />
                     </image>
                 </ImageView>
-                <Button layoutX="136.0" layoutY="484.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="132.0" style="-fx-background-color: #24272B;" text="Borrowed Items " textFill="#e8f1f2">
+                <Button layoutX="42.0" layoutY="431.0" mnemonicParsing="false" onAction="#onBorrowedHistoryClick" prefHeight="50.0" prefWidth="132.0" style="-fx-background-color: #24272B;" text="Borrowed History" textFill="#e8f1f2">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
-                <Button layoutX="117.0" layoutY="319.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: #24272B;" text="Show Favorites" textFill="#e8f1f2">
+                <Button layoutX="211.0" layoutY="273.0" mnemonicParsing="false" onAction="#showFavoritesClick" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: #24272B;" text="Show Favorites" textFill="#e8f1f2">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
@@ -40,17 +42,22 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="list_items" layoutX="150.0" layoutY="269.0" mnemonicParsing="false" onAction="#showItemsClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Show Items" textFill="#e8f1f2">
+                <Button fx:id="list_items" layoutX="56.0" layoutY="273.0" mnemonicParsing="false" onAction="#showItemsClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Show Items" textFill="#e8f1f2">
                     <font>
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Button>
-            <Button layoutX="129.0" layoutY="434.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="147.0" style="-fx-background-color: #24272B;" text="Request to Borrow" textFill="#e8f1f2">
+            <Button fx:id="request_button" layoutX="33.0" layoutY="360.0" mnemonicParsing="false" onAction="#onRequestClick" prefHeight="50.0" prefWidth="147.0" style="-fx-background-color: #24272B;" text="Request to Borrow" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="117.0" layoutY="377.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: #24272B;" text="Add to Favorites" textFill="#e8f1f2">
+            <Button layoutX="211.0" layoutY="360.0" mnemonicParsing="false" onAction="#addFavoritesClick" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: #24272B;" text="Add to Favorites" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="221.0" layoutY="431.0" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="50.0" prefWidth="147.0" style="-fx-background-color: #24272B;" text="Search" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -92,4 +99,20 @@
             </columnResizePolicy>
         </TableView>
     </center>
+   <bottom>
+      <AnchorPane prefHeight="85.0" prefWidth="1080.0" style="-fx-background-color: #24272B #24272B;" BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="username_field" layoutX="67.0" layoutY="12.0" prefHeight="25.0" prefWidth="83.0" promptText="username" />
+            <Text fill="WHITE" layoutX="2.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" />
+            <TextField fx:id="item_id_field" layoutX="168.0" layoutY="12.0" prefHeight="25.0" prefWidth="104.0" promptText="Item ID Number" />
+            <Text fill="WHITE" layoutX="713.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time In" wrappingWidth="72.21630859375" />
+            <TextField fx:id="item_name_field" layoutX="283.0" layoutY="12.0" promptText="Item Name" />
+            <TextField fx:id="time_in_field" layoutX="662.0" layoutY="12.0" prefHeight="25.0" prefWidth="175.0" promptText="(HH:MM:SS MM/DD/YYYY)" />
+            <TextField fx:id="time_out_field" layoutX="842.0" layoutY="12.0" prefHeight="25.0" prefWidth="173.0" promptText="(HH:MM:SS MM/DD/YYYY)" />
+            <TextField fx:id="item_producer_field" layoutX="452.0" layoutY="12.0" prefHeight="25.0" prefWidth="105.0" promptText="Item Producer" />
+            <Text fill="WHITE" layoutX="907.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Out" />
+            <TextField fx:id="number_of_items" disable="true" layoutX="570.0" layoutY="12.0" prefHeight="25.0" prefWidth="83.0" promptText="# of items" />
+         </children>
+      </AnchorPane>
+   </bottom>
 </BorderPane>
