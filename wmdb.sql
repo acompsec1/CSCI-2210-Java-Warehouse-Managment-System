@@ -34,7 +34,7 @@ CREATE TABLE `borrowed_items` (
   PRIMARY KEY (`BORROW_REQUEST`),
   KEY `USERID_idx` (`user_id`),
   CONSTRAINT `USERID` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +43,7 @@ CREATE TABLE `borrowed_items` (
 
 LOCK TABLES `borrowed_items` WRITE;
 /*!40000 ALTER TABLE `borrowed_items` DISABLE KEYS */;
+INSERT INTO `borrowed_items` VALUES (5,1,1,1,'2012-12-12 10:10:10','2012-12-12 10:10:10'),(6,1,1,5,'2021-12-12 10:10:10','2022-01-01 01:01:01'),(7,1,1,19,'2021-12-12 10:10:10','2022-12-12 11:11:11');
 /*!40000 ALTER TABLE `borrowed_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,7 +85,7 @@ DROP TABLE IF EXISTS `items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `items` (
-  `ITEMID` int NOT NULL,
+  `ITEMID` int NOT NULL AUTO_INCREMENT,
   `category` varchar(45) DEFAULT NULL,
   `name` varchar(45) DEFAULT NULL,
   `quantity` int DEFAULT NULL,
@@ -94,7 +95,7 @@ CREATE TABLE `items` (
   `provider` varchar(45) DEFAULT NULL,
   `location` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ITEMID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +148,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`ID`),
   KEY `ROLEID_idx` (`role_id`),
   CONSTRAINT `ROLEID` FOREIGN KEY (`role_id`) REFERENCES `roles` (`ROLEID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +157,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ajmahr','827ccb0eea8a706c4c34a16891f84e7b',1),(2,'user','5f4dcc3b5aa765d61d8327deb882cf99',0),(3,'test','098f6bcd4621d373cade4e832627b4f6',1),(4,'test2','098f6bcd4621d373cade4e832627b4f6',0),(5,'test3','098f6bcd4621d373cade4e832627b4f6',0);
+INSERT INTO `users` VALUES (1,'ajmahr','827ccb0eea8a706c4c34a16891f84e7b',1),(2,'user','5f4dcc3b5aa765d61d8327deb882cf99',0),(3,'test','098f6bcd4621d373cade4e832627b4f6',1),(4,'test2','098f6bcd4621d373cade4e832627b4f6',0),(5,'test3','098f6bcd4621d373cade4e832627b4f6',0),(11,'jake','098f6bcd4621d373cade4e832627b4f6',1),(15,'manfredi','098f6bcd4621d373cade4e832627b4f6',0),(16,'antonio','5f4dcc3b5aa765d61d8327deb882cf99',0),(17,'test6','098f6bcd4621d373cade4e832627b4f6',0),(18,'test16','098f6bcd4621d373cade4e832627b4f6',0),(19,'professor','098f6bcd4621d373cade4e832627b4f6',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -169,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-19 11:09:08
+-- Dump completed on 2021-04-22 12:24:49
