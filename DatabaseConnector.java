@@ -27,6 +27,8 @@ public class DatabaseConnector {
     private static final String CREATE_BORROW_REQUEST = "INSERT INTO borrowed_items (item_id, amount, user_id, borrow_date, return_date) VALUES (?, 1, ?, STR_TO_DATE(?, \"%H:%i:%s %m/%d/%Y\"), STR_TO_DATE(?,\"%H:%i:%s %m/%d/%Y\"))";
     private static final String ITEM_QUERY = "Select ITEMID from items where ITEMID = ?";
     private static final String USERID_QUERY = "Select ID from users where username = ?";
+    private static final String FIND_ITEM = "Select name from items where ITEMID = ?";
+    private static final String DELETE_ITEM = "DELETE FROM items where ITEMID = ?";
 
 
     public static void infoBox(String infoMessage, String headerText, String title) {
@@ -342,6 +344,59 @@ public class DatabaseConnector {
 
         } catch (SQLException e) {
             // print SQL exception information
+            printSQLException(e);
+        }
+        return false;
+    }
+
+    public boolean getItemName(Integer item_id, String item_name) throws Exception{
+        Connection con = getConnection();
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(FIND_ITEM)) {
+            preparedStatement.setInt(1, item_id);
+
+//            System.out.println(preparedStatement);
+
+            //EXECUTE THE QUERY
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String value = resultSet.getString(1);
+
+                if (value.equals(item_name)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+//
+            }
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            System.out.print("FAILED TO EXECUTE ITEM SEARCH VERIFICATION PROPERLY");
+            printSQLException(e);
+        }
+        return false;
+    }
+
+    public boolean deleteItem(Integer item_id, String item_name) throws Exception{
+        Connection con = getConnection();
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(DELETE_ITEM)) {
+            preparedStatement.setInt(1, item_id);
+//            preparedStatement.setString(2,item_name);
+//            System.out.println(preparedStatement);
+
+            //EXECUTE THE QUERY
+            preparedStatement.executeUpdate();
+            infoBox("Item deleted!", null, "Success!");
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            System.out.print("FAILED TO EXECUTE DELETE ITEM PROPERLY");
             printSQLException(e);
         }
         return false;

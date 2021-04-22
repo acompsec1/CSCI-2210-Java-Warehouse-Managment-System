@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AdminDashboard implements Initializable {
@@ -97,9 +98,42 @@ public class AdminDashboard implements Initializable {
     }
 
     @FXML
-    void onDeleteItemClick(ActionEvent event) throws IOException{
-        System.out.print("Delete Button Pressed");
+    void onDeleteItemClick(ActionEvent event) throws Exception {
+        DatabaseConnector database = new DatabaseConnector();
+        Window window = userAdd.getScene().getWindow();
 
+        if (item_field.getText().isEmpty()){
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the ITEM ID");
+            return;
+        }
+        if (item_name_field.getText().isEmpty()){
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the ITEM NAME");
+            return;
+        }
+
+        Integer itemID = Integer.parseInt(item_field.getText());
+        String item_name = item_name_field.getText();
+
+        boolean flag = database.getItem(itemID);
+
+        boolean item_info_matches = database.getItemName(itemID, item_name);
+
+        if (flag) {
+            if (item_info_matches) {
+                database.deleteItem(itemID, item_name);
+                item_field.clear();
+                item_name_field.clear();
+            }
+            else {
+                database.infoBox("The ITEM NAME entered is not associated with the ITEMID entered. Please ensure item data matches correctly.", null, "Failed");
+            }
+        }
+        else {
+            database.infoBox("This ITEMID or Item NAME does not exist, please check your data entries.", null, "Failed");
+        }
+        showItems();
     }
 
     @FXML
