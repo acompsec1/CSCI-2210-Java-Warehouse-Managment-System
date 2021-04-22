@@ -151,10 +151,6 @@ public class AdminDashboard implements Initializable {
         DynamicTableView table = new DynamicTableView();
         table.buildData(rootPane, tableView, "items");
     }
-    void showRequests() throws Exception{
-        DynamicTableView table = new DynamicTableView();
-        table.buildData(rootPane, tableView, "borrowed");
-    }
 
     @FXML
     void showFavorites(ActionEvent event) throws Exception{
@@ -206,7 +202,41 @@ public class AdminDashboard implements Initializable {
         showUsers();
     }
 
-    public void onAcceptReject(ActionEvent event) {
+    public void onAcceptReject(ActionEvent event) throws Exception{
+        DatabaseConnector database = new DatabaseConnector();
+        Window window = userAdd.getScene().getWindow();
+        if (request_id_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the request ID");
+            return;
+        }
+        if (accept_reject_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window , "Form Error!",
+                    "Please enter accept or reject option");
+            return;
+        }
+
+        int request_id = Integer.parseInt(request_id_field.getText());
+        String option = accept_reject_field.getText();
+
+        boolean flag = database.requestExists(request_id);
+
+        if(flag)
+        {
+            if(option.equalsIgnoreCase("accept"))
+            {
+                database.acceptRequest(request_id);
+            }else if(option.equalsIgnoreCase("reject"))
+            {
+                database.rejectRequest(request_id);
+            }
+        }else
+        {
+            database.showAlert(Alert.AlertType.ERROR, window , "Form Error!",
+                    "That item request does not exist, please try again.");
+            return;
+        }
+        showBorrowed();
     }
 
     public void onDeleteFavorite(ActionEvent event) {
@@ -318,9 +348,14 @@ public class AdminDashboard implements Initializable {
     public void onEditItemClick(ActionEvent event) {
     }
 
-    public void onShowBorrow(ActionEvent event) throws Exception {
+    void showBorrowed() throws Exception
+    {
         DynamicTableView table = new DynamicTableView();
-        table.buildData(rootPane, tableView, "borrowed");
+        table.buildData(rootPane, tableView, "requested");
+    }
+
+    public void onShowBorrow(ActionEvent event) throws Exception {
+        showBorrowed();
     }
 
     public void onBorrowRequest(ActionEvent event) throws Exception {
@@ -363,7 +398,7 @@ public class AdminDashboard implements Initializable {
                 String time_in = time_in_field.getText();
                 String time_out = time_out_field.getText();
                 database.createRequest(user_id, id_item, time_in, time_out);
-                showRequests();
+                showBorrowed();
             }
             else{
                 database.infoBox("The item ID you entered does not exist. Please check your entry.", null, "Failed");

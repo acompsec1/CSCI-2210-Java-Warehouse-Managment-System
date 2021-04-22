@@ -57,6 +57,9 @@ public class DynamicTableView {
             else if (option.equals("borrowed")){
                 sqlQuery = "Select * from borrowed_items";
             }
+            else if (option.equals("requested")){
+                sqlQuery = "Select * from borrowed_items WHERE borrow_status = 0";
+            }
             else{
                 System.out.println("There was an error setting the query statement");
             }

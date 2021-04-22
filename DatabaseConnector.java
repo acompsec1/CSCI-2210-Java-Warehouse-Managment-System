@@ -14,7 +14,7 @@ public class DatabaseConnector {
 
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/wmdb";
     private static final String DATABASE_USERNAME = "root";
-    private static final String DATABASE_PASSWORD = "ki8&fRda";
+    private static final String DATABASE_PASSWORD = "HdoXtXzjrk101!";
     private static final String SELECT_QUERY = "SELECT * FROM users WHERE username = ? and password_hash = ?";
     private static final String ROLE_QUERY = "SELECT role_id FROM users WHERE username = ? and password_hash = ?";
     private static final String USER_QUERY = "SELECT username FROM users WHERE username = ?";
@@ -24,11 +24,15 @@ public class DatabaseConnector {
     private static final String UPDATE_USER_PASSWORD = "UPDATE users SET password_hash = ? where ID = ?";
     private static final String UPDATE_USER_ROLE = "UPDATE users set role_id = ? where ID = ?";
     private static final String UPDATE_USER_BOTH = "Update users set role_id = ?, password_hash = ? where ID = ?";
-    private static final String CREATE_BORROW_REQUEST = "INSERT INTO borrowed_items (item_id, amount, user_id, borrow_date, return_date) VALUES (?, 1, ?, STR_TO_DATE(?, \"%H:%i:%s %m/%d/%Y\"), STR_TO_DATE(?,\"%H:%i:%s %m/%d/%Y\"))";
+    private static final String CREATE_BORROW_REQUEST = "INSERT INTO borrowed_items (item_id, amount, user_id, borrow_date, return_date, borrow_status) VALUES (?, 1, ?, STR_TO_DATE(?, \"%H:%i:%s %m/%d/%Y\"), STR_TO_DATE(?,\"%H:%i:%s %m/%d/%Y\"), 0)";
     private static final String ITEM_QUERY = "Select ITEMID from items where ITEMID = ?";
     private static final String USERID_QUERY = "Select ID from users where username = ?";
+    private static final String REQUEST_QUERY = "Select BORROW_REQUEST from borrowed_items where BORROW_REQUEST = ?";
     private static final String FIND_ITEM = "Select name from items where ITEMID = ?";
     private static final String DELETE_ITEM = "DELETE FROM items where ITEMID = ?";
+
+    private static final String ACCEPT_REQUEST = "UPDATE borrowed_items SET borrow_status = 1 WHERE BORROW_REQUEST = ?";
+    private static final String REJECT_REQUEST = "DELETE FROM borrowed_items WHERE BORROW_REQUEST = ?";
 
 
     public static void infoBox(String infoMessage, String headerText, String title) {
@@ -111,6 +115,84 @@ public class DatabaseConnector {
             printSQLException(e);
         }
         return false;
+    }
+
+    public boolean requestExists(int requestId) throws Exception{
+
+        // Step 1: Establishing a Connection and
+        // try-with-resource statement will auto close the connection.
+        Connection con = getConnection();
+        try (
+
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(REQUEST_QUERY)) {
+            preparedStatement.setInt(1, requestId);
+
+//            System.out.println(preparedStatement);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int value = resultSet.getInt(1);
+//                System.out.print(value);
+                if (value == requestId){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            printSQLException(e);
+        }
+        return false;
+    }
+
+    public static void acceptRequest(Integer requestId) throws Exception
+    {
+        // Step 1: Establishing a Connection and
+        // try-with-resource statement will auto close the connection.
+        Connection con = getConnection();
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(ACCEPT_REQUEST)) {
+            preparedStatement.setInt(1, requestId);
+
+//            System.out.println(preparedStatement);
+
+            //EXECUTE THE QUERY
+            preparedStatement.executeUpdate();
+            infoBox("Borrow request accepted!", null, "Success!");
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            printSQLException(e);
+        }
+    }
+
+    public static void rejectRequest(Integer requestId) throws Exception
+    {
+        // Step 1: Establishing a Connection and
+        // try-with-resource statement will auto close the connection.
+        Connection con = getConnection();
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(REJECT_REQUEST)) {
+            preparedStatement.setInt(1, requestId);
+
+//            System.out.println(preparedStatement);
+
+            //EXECUTE THE QUERY
+            preparedStatement.executeUpdate();
+            infoBox("Borrow request rejected!", null, "Success!");
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            printSQLException(e);
+        }
     }
 
     public boolean getUsername(Integer user_ID, String username) throws Exception{
