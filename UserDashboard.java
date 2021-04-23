@@ -77,11 +77,11 @@ public class UserDashboard implements Initializable {
         DatabaseConnector database = new DatabaseConnector();
         Window window = request_button.getScene().getWindow();
 
-        if (username_field.getText().isEmpty()) {
+       /* if (username_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
                     "Please enter your username");
             return;
-        }
+        }*/
 
         if (item_id_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
@@ -101,13 +101,12 @@ public class UserDashboard implements Initializable {
             return;
         }
 
-        String username = username_field.getText();
-        boolean flag = database.userExists(username);
+        //String username = username_field.getText();
+        //boolean flag = database.userExists(username);
         Integer id_item = Integer.parseInt(item_id_field.getText());
         boolean item_exists = database.getItem(id_item);
 
-        if (flag){
-            Integer user_id = database.getUserID(username);
+            Integer user_id = database.session;
             if (item_exists){
                 String time_in = time_in_field.getText();
                 String time_out = time_out_field.getText();
@@ -117,12 +116,6 @@ public class UserDashboard implements Initializable {
             else{
                 database.infoBox("The item ID you entered does not exist. Please check your entry.", null, "Failed");
             }
-
-        }
-        else {
-            database.infoBox("This username does not exist, please check your username entry field.", null, "Failed");
-        }
-
     }
 
     public void addFavoritesClick(ActionEvent event) {

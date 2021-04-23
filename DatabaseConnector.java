@@ -72,7 +72,6 @@ public class DatabaseConnector {
             preparedStatement.setString(1, usernameId);
             preparedStatement.setString(2, password);
             session = getUserID(usernameId);
-            System.out.println(session);
 //            System.out.println(preparedStatement);
 
             ResultSet resultSet = preparedStatement.executeQuery();
