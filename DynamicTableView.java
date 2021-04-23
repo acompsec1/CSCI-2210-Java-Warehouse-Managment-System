@@ -55,9 +55,6 @@ public class DynamicTableView {
                 sqlQuery = "SELECT * from items";
 //                ResultSet rs = c.createStatement().executeQuery(sqlQuery);
             }
-            else if (option.equals("borrowed")){
-                sqlQuery = "Select * from borrowed_items";
-            }
             else if (option.equals("requested")){
                 sqlQuery = "Select * from borrowed_items WHERE borrow_status = 0";
             }
