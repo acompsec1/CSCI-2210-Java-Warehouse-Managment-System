@@ -24,15 +24,19 @@ public class DatabaseConnector {
     private static final String UPDATE_USER_PASSWORD = "UPDATE users SET password_hash = ? where ID = ?";
     private static final String UPDATE_USER_ROLE = "UPDATE users set role_id = ? where ID = ?";
     private static final String UPDATE_USER_BOTH = "Update users set role_id = ?, password_hash = ? where ID = ?";
-    private static final String CREATE_BORROW_REQUEST = "INSERT INTO borrowed_items (item_id, amount, user_id, borrow_date, return_date, borrow_status) VALUES (?, 1, ?, STR_TO_DATE(?, \"%H:%i:%s %m/%d/%Y\"), STR_TO_DATE(?,\"%H:%i:%s %m/%d/%Y\"), 0)";
+    private static final String CREATE_BORROW_REQUEST = "INSERT INTO borrowed_items (item_id, amount, user_id, borrow_date, return_date, borrow_status) VALUES (?, 1, ?, STR_TO_DATE(?, \"%H:%i:%s %m/%d/%Y\"), STR_TO_DATE(?,\"%H:%i:%s %m/%d/%Y\"), \"PENDING\")";
     private static final String ITEM_QUERY = "Select ITEMID from items where ITEMID = ?";
     private static final String USERID_QUERY = "Select ID from users where username = ?";
     private static final String REQUEST_QUERY = "Select BORROW_REQUEST from borrowed_items where BORROW_REQUEST = ?";
     private static final String FIND_ITEM = "Select name from items where ITEMID = ?";
     private static final String DELETE_ITEM = "DELETE FROM items where ITEMID = ?";
 
-    private static final String ACCEPT_REQUEST = "UPDATE borrowed_items SET borrow_status = 1 WHERE BORROW_REQUEST = ?";
+    private static final String ACCEPT_REQUEST = "UPDATE borrowed_items SET borrow_status = \"ACCEPTED\" WHERE BORROW_REQUEST = ?";
     private static final String REJECT_REQUEST = "DELETE FROM borrowed_items WHERE BORROW_REQUEST = ?";
+    private static final String GET_USER_BORROWS = "SELECT * FROM borrowed_items WHERE user_id = ?";
+
+
+    public static int session;
 
 
     public static void infoBox(String infoMessage, String headerText, String title) {
@@ -67,7 +71,8 @@ public class DatabaseConnector {
              PreparedStatement preparedStatement = con.prepareStatement(SELECT_QUERY)) {
             preparedStatement.setString(1, usernameId);
             preparedStatement.setString(2, password);
-
+            session = getUserID(usernameId);
+            System.out.println(session);
 //            System.out.println(preparedStatement);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -225,6 +230,29 @@ public class DatabaseConnector {
             printSQLException(e);
         }
         return false;
+    }
+
+    public static ResultSet getUserBorrows(int user_ID, ResultSet rs) throws Exception
+    {
+        Connection con = DatabaseConnector.getConnection();
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(GET_USER_BORROWS)) {
+            preparedStatement.setInt(1, user_ID);
+
+//            System.out.println(preparedStatement);
+
+            //EXECUTE THE QUERY
+            ResultSet resultSet = preparedStatement.executeQuery();
+            rs = resultSet;
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            System.out.print("FAILED TO EXECUTE USERNAME SEARCH PROPERLY");
+            DatabaseConnector.printSQLException(e);
+        }
+        return null;
+
     }
 
     public int getUserID(String username) throws SQLException{

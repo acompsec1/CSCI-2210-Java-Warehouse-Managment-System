@@ -1,5 +1,6 @@
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -28,7 +29,6 @@ public class DynamicTableView {
     //TABLE VIEW AND DATA
     private ObservableList<ObservableList> data;
 
-
     //CONNECTION DATABASE
     public void buildData(BorderPane border, TableView tableView, String option) throws Exception {
 
@@ -41,13 +41,14 @@ public class DynamicTableView {
             c = DatabaseConnector.getConnection();
             ResultSet rs;
             String sqlQuery  = "";
+            DatabaseConnector dbc = new DatabaseConnector();
 
 
             if (option.equals("users")) {
                 sqlQuery = "SELECT * from users";
             }
             else if (option.equals("borrowed")) {
-                sqlQuery = "SELECT * from borrowed_items";
+                sqlQuery = "SELECT * from borrowed_items WHERE user_id = " + DatabaseConnector.session;
 //                ResultSet rs = c.createStatement().executeQuery(sqlQuery);
             }
             else if (option.equals("items")) {
@@ -65,6 +66,10 @@ public class DynamicTableView {
             }
 
             rs = c.createStatement().executeQuery(sqlQuery);
+
+
+
+
             //ResultSet
             /**
              * ********************************

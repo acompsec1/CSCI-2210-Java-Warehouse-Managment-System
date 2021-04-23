@@ -63,7 +63,8 @@ public class UserDashboard implements Initializable {
         // Take input from fields - Item ID, item name, producer - Don't believe you need to cross-check entry relationships
     }
 
-    public void onBorrowedHistoryClick(ActionEvent event) {
+    public void onBorrowedHistoryClick(ActionEvent event) throws Exception{
+        showRequests();
         // Search for your history based on Username entry - can get the UserID by searching for name - getUsername in databaseconnector (i believe)
     }
 
