@@ -35,7 +35,7 @@ public class DatabaseConnector {
     private static final String REJECT_REQUEST = "DELETE FROM borrowed_items WHERE BORROW_REQUEST = ?";
     private static final String GET_USER_BORROWS = "SELECT * FROM borrowed_items WHERE user_id = ?";
 
-    private static final String ADD_FAVORITE = "INSERT INTO favorites (item_id, user_id) VALUES (?, ?)";
+    private static final String ADD_FAVORITE = "INSERT INTO favorites (item_id, item_name, user_id) VALUES (?, ?, ?)";
 
 
     public static int session;
@@ -602,14 +602,15 @@ public class DatabaseConnector {
         return false;
     }
 
-    public boolean addFavorite(Integer item_id, Integer user_id) throws SQLException {
+    public boolean addFavorite(Integer item_id, String item_name, Integer user_id) throws SQLException {
         Connection con = getConnection();
 
         try (
                 // Step 2:Create a statement using connection object
                 PreparedStatement preparedStatement = con.prepareStatement(ADD_FAVORITE)) {
             preparedStatement.setInt(1, item_id);
-            preparedStatement.setInt(2, user_id);
+            preparedStatement.setString(2, item_name);
+            preparedStatement.setInt(3, user_id);
             //EXECUTE THE QUERY
             preparedStatement.executeUpdate();
             infoBox("Item added to favorites!", null, "Success!");

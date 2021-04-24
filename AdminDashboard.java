@@ -332,7 +332,7 @@ public class AdminDashboard implements Initializable {
         boolean item_info_matches = database.verifyItem(id_item, item_name);
 
         if (item_info_matches) {
-            database.addFavorite(id_item, user_id);
+            database.addFavorite(id_item, item_name, user_id);
             //showFavorites();
             item_name_field.clear();
             item_field.clear();
