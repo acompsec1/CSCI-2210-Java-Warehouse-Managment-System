@@ -125,7 +125,7 @@ public class UserDashboard implements Initializable {
     }
 
     public void addFavoritesClick(ActionEvent event) throws Exception {
-        // take username, item id and name - then add to favorites table - cross verify that the item id and name match - model after username function
+        // take item id and name - then add to favorites table - cross verify that the item id and name match - model after username function
         DatabaseConnector database = new DatabaseConnector();
         //Statement statement = con.createStatement();
         Window window = add_fav_button.getScene().getWindow();
@@ -146,24 +146,23 @@ public class UserDashboard implements Initializable {
         Integer user_id = database.session;
 
         boolean item_id_exists = database.getItem(id_item);
-
         boolean item_name_exists = database.itemExists(item_name);
         boolean item_info_matches = database.verifyItem(id_item, item_name);
 
         if (item_info_matches) {
             database.addFavorite(id_item, user_id);
-            showFavorites();
+            //showFavorites();
             item_name_field.clear();
             item_id_field.clear();
         }
         else if (!item_id_exists) {
-            database.infoBox("The item ID you entered does not exist. Please check your entry.", null, "Failed");
+            database.infoBox("The ITEM ID you entered does not exist. Please check your entry.", null, "Failed");
         }
         else if (!item_name_exists) {
-            database.infoBox("The item name you entered does not exist. Please check your entry.", null, "Failed");
+            database.infoBox("The ITEM NAME you entered does not exist. Please check your entry.", null, "Failed");
         }
         else {
-            database.infoBox("The item name entered is not associated with the ID entered. Please ensure item data matches correctly.", null, "Failed");
+            database.infoBox("The ITEM NAME entered is not associated with the ITEM ID entered. Please ensure item data matches correctly.", null, "Failed");
         }
     }
 }
