@@ -13,8 +13,8 @@ import java.security.NoSuchAlgorithmException;
 public class DatabaseConnector {
 
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/wmdb";
-    private static final String DATABASE_USERNAME = "root";
-    private static final String DATABASE_PASSWORD = "HdoXtXzjrk101!";
+    private static final String DATABASE_USERNAME = "andy";
+    private static final String DATABASE_PASSWORD = "Am040500!";
     private static final String SELECT_QUERY = "SELECT * FROM users WHERE username = ? and password_hash = ?";
     private static final String ROLE_QUERY = "SELECT role_id FROM users WHERE username = ? and password_hash = ?";
     private static final String USER_QUERY = "SELECT username FROM users WHERE username = ?";
@@ -26,14 +26,16 @@ public class DatabaseConnector {
     private static final String UPDATE_USER_BOTH = "Update users set role_id = ?, password_hash = ? where ID = ?";
     private static final String CREATE_BORROW_REQUEST = "INSERT INTO borrowed_items (item_id, amount, user_id, borrow_date, return_date, borrow_status) VALUES (?, 1, ?, STR_TO_DATE(?, \"%H:%i:%s %m/%d/%Y\"), STR_TO_DATE(?,\"%H:%i:%s %m/%d/%Y\"), \"PENDING\")";
     private static final String ITEM_QUERY = "Select ITEMID from items where ITEMID = ?";
+    private static final String ITEM_EXISTS = "SELECT name FROM items WHERE name = ?";
     private static final String USERID_QUERY = "Select ID from users where username = ?";
     private static final String REQUEST_QUERY = "Select BORROW_REQUEST from borrowed_items where BORROW_REQUEST = ?";
     private static final String FIND_ITEM = "Select name from items where ITEMID = ?";
     private static final String DELETE_ITEM = "DELETE FROM items where ITEMID = ?";
-
     private static final String ACCEPT_REQUEST = "UPDATE borrowed_items SET borrow_status = \"ACCEPTED\" WHERE BORROW_REQUEST = ?";
     private static final String REJECT_REQUEST = "DELETE FROM borrowed_items WHERE BORROW_REQUEST = ?";
     private static final String GET_USER_BORROWS = "SELECT * FROM borrowed_items WHERE user_id = ?";
+
+    private static final String ADD_FAVORITE = "INSERT INTO favorites (item_id, user_id) VALUES (?, ?)";
 
 
     public static int session;
@@ -106,6 +108,40 @@ public class DatabaseConnector {
                 String value = resultSet.getString(1);
 //                System.out.print(value);
                 if (value.equals(usernameId)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            printSQLException(e);
+        }
+        return false;
+    }
+
+    public boolean itemExists(String item_name) throws Exception{
+
+        // Step 1: Establishing a Connection and
+        // try-with-resource statement will auto close the connection.
+        Connection con = getConnection();
+        try (
+
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(ITEM_EXISTS)) {
+            preparedStatement.setString(1, item_name);
+
+//            System.out.println(preparedStatement);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String value = resultSet.getString(1);
+//                System.out.print(value);
+                if (value.equals(item_name)){
                     return true;
                 }
                 else{
@@ -199,6 +235,61 @@ public class DatabaseConnector {
         }
     }
 
+    public boolean verifyItem(Integer item_ID, String item_name) throws Exception{
+        Connection con = getConnection();
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(FIND_ITEM)) {
+            preparedStatement.setInt(1, item_ID);
+
+//            System.out.println(preparedStatement);
+
+            //EXECUTE THE QUERY
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String value = resultSet.getString(1);
+
+                if (value.equals(item_name)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+//
+            }
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            System.out.print("FAILED TO EXECUTE ITEM NAME SEARCH PROPERLY");
+            printSQLException(e);
+        }
+        return false;
+    }
+
+    public static ResultSet getUserBorrows(int user_ID, ResultSet rs) throws Exception
+    {
+        Connection con = DatabaseConnector.getConnection();
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(GET_USER_BORROWS)) {
+            preparedStatement.setInt(1, user_ID);
+
+//            System.out.println(preparedStatement);
+
+            //EXECUTE THE QUERY
+            ResultSet resultSet = preparedStatement.executeQuery();
+            rs = resultSet;
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            System.out.print("FAILED TO EXECUTE USERNAME SEARCH PROPERLY");
+            DatabaseConnector.printSQLException(e);
+        }
+        return null;
+
+    }
+
     public boolean getUsername(Integer user_ID, String username) throws Exception{
         Connection con = getConnection();
         try (
@@ -229,29 +320,6 @@ public class DatabaseConnector {
             printSQLException(e);
         }
         return false;
-    }
-
-    public static ResultSet getUserBorrows(int user_ID, ResultSet rs) throws Exception
-    {
-        Connection con = DatabaseConnector.getConnection();
-        try (
-                // Step 2:Create a statement using connection object
-                PreparedStatement preparedStatement = con.prepareStatement(GET_USER_BORROWS)) {
-            preparedStatement.setInt(1, user_ID);
-
-//            System.out.println(preparedStatement);
-
-            //EXECUTE THE QUERY
-            ResultSet resultSet = preparedStatement.executeQuery();
-            rs = resultSet;
-
-        } catch (SQLException e) {
-            // print SQL exception information
-            System.out.print("FAILED TO EXECUTE USERNAME SEARCH PROPERLY");
-            DatabaseConnector.printSQLException(e);
-        }
-        return null;
-
     }
 
     public int getUserID(String username) throws SQLException{
@@ -525,6 +593,26 @@ public class DatabaseConnector {
             //EXECUTE THE QUERY
             preparedStatement.executeUpdate();
             infoBox("Borrow Request Created!", null, "Success!");
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            System.out.print("FAILED TO EXECUTE CREATE REQUEST PROPERLY");
+            printSQLException(e);
+        }
+        return false;
+    }
+
+    public boolean addFavorite(Integer item_id, Integer user_id) throws SQLException {
+        Connection con = getConnection();
+
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(ADD_FAVORITE)) {
+            preparedStatement.setInt(1, item_id);
+            preparedStatement.setInt(2, user_id);
+            //EXECUTE THE QUERY
+            preparedStatement.executeUpdate();
+            infoBox("Item added to favorites!", null, "Success!");
 
         } catch (SQLException e) {
             // print SQL exception information
