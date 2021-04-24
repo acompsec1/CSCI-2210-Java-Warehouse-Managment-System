@@ -34,7 +34,6 @@ public class DatabaseConnector {
     private static final String ACCEPT_REQUEST = "UPDATE borrowed_items SET borrow_status = \"ACCEPTED\" WHERE BORROW_REQUEST = ?";
     private static final String REJECT_REQUEST = "DELETE FROM borrowed_items WHERE BORROW_REQUEST = ?";
     private static final String GET_USER_BORROWS = "SELECT * FROM borrowed_items WHERE user_id = ?";
-
     private static final String ADD_FAVORITE = "INSERT INTO favorites (item_id, item_name, user_id) VALUES (?, ?, ?)";
 
 

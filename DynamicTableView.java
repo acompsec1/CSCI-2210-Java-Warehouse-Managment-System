@@ -59,7 +59,7 @@ public class DynamicTableView {
                 sqlQuery = "Select * from borrowed_items WHERE borrow_status = 0";
             }
             else if (option.equals("favorites")){
-                sqlQuery = "Select * from favorites";
+                sqlQuery = "Select * from favorites WHERE user_id =" + DatabaseConnector.session;
             }
             else{
                 System.out.println("There was an error setting the query statement");

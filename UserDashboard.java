@@ -74,8 +74,9 @@ public class UserDashboard implements Initializable {
         // Search for your history based on Username entry - can get the UserID by searching for name - getUsername in databaseconnector (i believe)
     }
 
-    public void showFavoritesClick(ActionEvent event) {
+    public void showFavoritesClick(ActionEvent event) throws Exception {
         // search for the favorites by entering username - get userID by using the getUsername function (i believe) - see admin.java for examples
+        showFavorites();
     }
 
     public void onRequestClick(ActionEvent event) throws Exception {
@@ -151,7 +152,7 @@ public class UserDashboard implements Initializable {
 
         if (item_info_matches) {
             database.addFavorite(id_item, item_name, user_id);
-            //showFavorites();
+            showFavorites();
             item_name_field.clear();
             item_id_field.clear();
         }

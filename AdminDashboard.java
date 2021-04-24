@@ -153,7 +153,7 @@ public class AdminDashboard implements Initializable {
     }
 
     @FXML
-    void showFavorites(ActionEvent event) throws Exception{
+    void showFavorites() throws Exception{
         DynamicTableView table = new DynamicTableView();
         table.buildData(rootPane, tableView, "favorites");
     }
@@ -333,7 +333,7 @@ public class AdminDashboard implements Initializable {
 
         if (item_info_matches) {
             database.addFavorite(id_item, item_name, user_id);
-            //showFavorites();
+            showFavorites();
             item_name_field.clear();
             item_field.clear();
         }
