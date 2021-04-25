@@ -361,8 +361,12 @@ public class AdminDashboard implements Initializable {
         boolean item_id_exists = database.getItem(id_item);
         boolean item_name_exists = database.itemExists(item_name);
         boolean item_info_matches = database.verifyItem(id_item, item_name);
+        boolean favorite_exists = database.favoriteItemExists(id_item, user_id);
 
-        if (item_info_matches) {
+        if(favorite_exists)
+        {
+            database.infoBox("You cannot have two of the same item on your favorites list, please try again.", null, "Failed");
+        }else if (item_info_matches) {
             database.addFavorite(id_item, item_name, user_id);
             showFavorites();
             item_name_field.clear();

@@ -15,7 +15,7 @@ public class DatabaseConnector {
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/wmdb";
 
     private static final String DATABASE_USERNAME = "root";
-    private static final String DATABASE_PASSWORD = "ki8&fRda";
+    private static final String DATABASE_PASSWORD = "HdoXtXzjrk101!";
 
     private static final String SELECT_QUERY = "SELECT * FROM users WHERE username = ? and password_hash = ?";
     private static final String ROLE_QUERY = "SELECT role_id FROM users WHERE username = ? and password_hash = ?";
@@ -39,6 +39,7 @@ public class DatabaseConnector {
     private static final String ADD_FAVORITE = "INSERT INTO favorites (item_id, item_name, user_id) VALUES (?, ?, ?)";
     private static final String FAVORITE_QUERY = "SELECT FAVORITEID from favorites where FAVORITEID = ?";
     private static final String DELETE_FAVORITE = "DELETE FROM favorites where USER_ID = ? and FAVORITEID = ?";
+    private static final String FAVORITE_EXISTS = "SELECT item_id, user_id FROM favorites WHERE ITEM_ID = ? and USER_ID = ?";
 
 
     public static int session;
@@ -145,6 +146,42 @@ public class DatabaseConnector {
                 String value = resultSet.getString(1);
 //                System.out.print(value);
                 if (value.equals(item_name)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            printSQLException(e);
+        }
+        return false;
+    }
+
+    public boolean favoriteItemExists(int item_id, int user_id) throws Exception{
+
+        // Step 1: Establishing a Connection and
+        // try-with-resource statement will auto close the connection.
+        Connection con = getConnection();
+        try (
+
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(FAVORITE_EXISTS)) {
+            preparedStatement.setInt(1, item_id);
+            preparedStatement.setInt(2, user_id);
+
+//            System.out.println(preparedStatement);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int item = resultSet.getInt(1);
+                int user = resultSet.getInt(2);
+//                System.out.print(value);
+                if (item == item_id && user == user_id){
                     return true;
                 }
                 else{
