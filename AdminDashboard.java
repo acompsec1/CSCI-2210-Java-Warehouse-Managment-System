@@ -457,13 +457,19 @@ public class AdminDashboard implements Initializable {
 
         Integer id_item = Integer.parseInt(item_field.getText());
         boolean item_exists = database.getItem(id_item);
-
         Integer user_id = database.session;
+        boolean number_of_previous_requests = database.getBorrowRequestCount(user_id);
+
         if (item_exists){
-            String time_in = time_in_field.getText();
-            String time_out = time_out_field.getText();
-            database.createRequest(user_id, id_item, time_in, time_out);
-            showRequests();
+            if (number_of_previous_requests){
+                database.infoBox("You have too many borrow requests that are pending, please wait for previous requests to be approved or rejected.", null, "Failed");
+            }
+            else {
+                String time_in = time_in_field.getText();
+                String time_out = time_out_field.getText();
+                database.createRequest(user_id, id_item, time_in, time_out);
+                showRequests();
+            }
         }
         else{
             database.infoBox("The item ID you entered does not exist. Please check your entry.", null, "Failed");

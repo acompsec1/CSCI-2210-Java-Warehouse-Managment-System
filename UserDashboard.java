@@ -104,21 +104,27 @@ public class UserDashboard implements Initializable {
             return;
         }
 
-        //String username = username_field.getText();
-        //boolean flag = database.userExists(username);
+
         Integer id_item = Integer.parseInt(item_id_field.getText());
         boolean item_exists = database.getItem(id_item);
+        Integer user_id = database.session;
+        boolean number_of_previous_requests = database.getBorrowRequestCount(user_id);
 
-            Integer user_id = database.session;
-            if (item_exists){
+        if (item_exists){
+            if (number_of_previous_requests){
+                database.infoBox("You have too many borrow requests that are pending, please wait for previous requests to be approved or rejected.", null, "Failed");
+                showRequests();
+            }
+            else {
                 String time_in = time_in_field.getText();
                 String time_out = time_out_field.getText();
                 database.createRequest(user_id, id_item, time_in, time_out);
                 showRequests();
             }
-            else{
-                database.infoBox("The item ID you entered does not exist. Please check your entry.", null, "Failed");
-            }
+        }
+        else{
+            database.infoBox("The item ID you entered does not exist. Please check your entry.", null, "Failed");
+        }
     }
 
     public void addFavoritesClick(ActionEvent event) throws Exception {

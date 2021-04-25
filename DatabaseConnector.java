@@ -15,7 +15,7 @@ public class DatabaseConnector {
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/wmdb";
 
     private static final String DATABASE_USERNAME = "root";
-    private static final String DATABASE_PASSWORD = "HdoXtXzjrk101!";
+    private static final String DATABASE_PASSWORD = "ki8&fRda";
 
     private static final String SELECT_QUERY = "SELECT * FROM users WHERE username = ? and password_hash = ?";
     private static final String ROLE_QUERY = "SELECT role_id FROM users WHERE username = ? and password_hash = ?";
@@ -40,7 +40,7 @@ public class DatabaseConnector {
     private static final String FAVORITE_QUERY = "SELECT FAVORITEID from favorites where FAVORITEID = ?";
     private static final String DELETE_FAVORITE = "DELETE FROM favorites where USER_ID = ? and FAVORITEID = ?";
     private static final String FAVORITE_EXISTS = "SELECT item_id, user_id FROM favorites WHERE ITEM_ID = ? and USER_ID = ?";
-
+    private static final String COUNT_BORROW_REQUESTS = "SELECT count(BORROW_REQUEST) from borrowed_items where user_id = ? and borrow_status = 'PENDING'";
 
     public static int session;
 
@@ -307,8 +307,7 @@ public class DatabaseConnector {
         return false;
     }
 
-    public static ResultSet getUserBorrows(int user_ID, ResultSet rs) throws Exception
-    {
+    public static ResultSet getUserBorrows(int user_ID, ResultSet rs) throws Exception {
         Connection con = DatabaseConnector.getConnection();
         try (
                 // Step 2:Create a statement using connection object
@@ -637,6 +636,37 @@ public class DatabaseConnector {
         } catch (SQLException e) {
             // print SQL exception information
             System.out.print("FAILED TO EXECUTE CREATE REQUEST PROPERLY");
+            printSQLException(e);
+        }
+        return false;
+    }
+
+    public boolean getBorrowRequestCount(Integer user_id) throws SQLException {
+        Connection con = getConnection();
+        try (
+
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(COUNT_BORROW_REQUESTS)) {
+            preparedStatement.setInt(1, user_id);
+
+//            System.out.println(preparedStatement);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Integer value = resultSet.getInt(1);
+//                System.out.print(value);
+                if (value.equals(3)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+
+        } catch (SQLException e) {
+            // print SQL exception information
             printSQLException(e);
         }
         return false;
