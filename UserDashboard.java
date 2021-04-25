@@ -73,15 +73,9 @@ public class UserDashboard implements Initializable {
     }
 
     public void onRequestClick(ActionEvent event) throws Exception {
-//        showItems();
+        showItems();
         DatabaseConnector database = new DatabaseConnector();
         Window window = request_button.getScene().getWindow();
-
-       /* if (username_field.getText().isEmpty()) {
-            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
-                    "Please enter your username");
-            return;
-        }*/
 
         if (item_id_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
