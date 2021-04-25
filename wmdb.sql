@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `wmdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `wmdb`;
--- MySQL dump 10.13  Distrib 8.0.21, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.22, for macos10.15 (x86_64)
 --
 -- Host: 127.0.0.1    Database: wmdb
 -- ------------------------------------------------------
--- Server version	8.0.21
+-- Server version	8.0.23
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -35,7 +35,7 @@ CREATE TABLE `borrowed_items` (
   PRIMARY KEY (`BORROW_REQUEST`),
   KEY `USERID_idx` (`user_id`),
   CONSTRAINT `USERID` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `borrowed_items` (
 
 LOCK TABLES `borrowed_items` WRITE;
 /*!40000 ALTER TABLE `borrowed_items` DISABLE KEYS */;
-INSERT INTO `borrowed_items` VALUES (9,1,1,4,'2021-08-19 10:10:10','2022-08-19 11:11:11','ACCEPTED'),(10,1,1,4,'2021-08-19 10:10:10','2021-08-19 11:11:11','PENDING');
+INSERT INTO `borrowed_items` VALUES (9,1,1,4,'2021-08-19 10:10:10','2022-08-19 11:11:11','ACCEPTED'),(10,1,1,4,'2021-08-19 10:10:10','2021-08-19 11:11:11','ACCEPTED'),(11,1,1,1,'2021-01-01 10:10:10','2021-12-12 11:11:11','ACCEPTED'),(12,1,1,5,'2012-12-12 10:10:10','2021-12-12 12:12:12','ACCEPTED');
 /*!40000 ALTER TABLE `borrowed_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -64,9 +64,10 @@ CREATE TABLE `favorites` (
   KEY `ITEMID_idx` (`item_id`),
   KEY `FAVITEMID_idx` (`item_id`),
   KEY `USER_ID_idx` (`user_id`),
+  KEY `ITEMNAME_idx` (`item_name`),
   CONSTRAINT `FAVITEMID` FOREIGN KEY (`item_id`) REFERENCES `items` (`ITEMID`),
   CONSTRAINT `USER_ID` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +76,7 @@ CREATE TABLE `favorites` (
 
 LOCK TABLES `favorites` WRITE;
 /*!40000 ALTER TABLE `favorites` DISABLE KEYS */;
-INSERT INTO `favorites` VALUES (1,2,'placeholder',1),(2,3,'placeholder2',1);
+INSERT INTO `favorites` VALUES (5,1,'Ferrari',1),(6,1,'Ferrari',3),(7,1,'Ferrari',1),(9,1,'Ferrari',1),(10,1,'Ferrari',5),(11,1,'Ferrari',5),(12,3,'Cheeseburger',1);
 /*!40000 ALTER TABLE `favorites` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +88,7 @@ DROP TABLE IF EXISTS `items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `items` (
-  `ITEMID` int NOT NULL,
+  `ITEMID` int NOT NULL AUTO_INCREMENT,
   `category` varchar(45) DEFAULT NULL,
   `name` varchar(45) DEFAULT NULL,
   `quantity` int DEFAULT NULL,
@@ -97,7 +98,7 @@ CREATE TABLE `items` (
   `provider` varchar(45) DEFAULT NULL,
   `location` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ITEMID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +107,7 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` VALUES (1,'Cars','Ferrari',1,400000,'2021-04-14 05:30:00','2021-06-05 04:20:00','Ferrari','Italy');
+INSERT INTO `items` VALUES (1,'Cars','Ferrari',1,400000,'2021-04-14 05:30:00','2021-06-05 04:20:00','Ferrari','Italy'),(2,'Food','Cheeseburger',1,10,'2021-12-12 10:10:10','2021-12-12 11:11:11','Burger King','West Haven'),(3,'Food','Cheeseburger',1,10,'2021-12-12 10:10:10','2021-12-12 11:11:11','Burger King','West Haven');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,4 +173,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-24 19:31:50
+-- Dump completed on 2021-04-25 15:34:56
