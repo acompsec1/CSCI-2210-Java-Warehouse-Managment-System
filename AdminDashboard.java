@@ -158,6 +158,11 @@ public class AdminDashboard implements Initializable {
         table.buildData(rootPane, tableView, "favorites");
     }
 
+    void showRequests() throws Exception{
+        DynamicTableView table = new DynamicTableView();
+        table.buildData(rootPane, tableView, "borrowed");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
         tableView.setEditable(true);
@@ -400,12 +405,7 @@ public class AdminDashboard implements Initializable {
     public void onBorrowRequest(ActionEvent event) throws Exception {
         DatabaseConnector database = new DatabaseConnector();
         Window window = borrow_rent_button.getScene().getWindow();
-
-        if (username_field.getText().isEmpty()) {
-            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
-                    "Please enter your username");
-            return;
-        }
+        showItems();
 
         if (item_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
@@ -425,27 +425,18 @@ public class AdminDashboard implements Initializable {
             return;
         }
 
-        String username = username_field.getText();
-        boolean flag = database.userExists(username);
         Integer id_item = Integer.parseInt(item_field.getText());
         boolean item_exists = database.getItem(id_item);
 
-        if (flag){
-            Integer user_id = database.getUserID(username);
-            System.out.println("USER ID: " + user_id);
-            if (item_exists){
-                String time_in = time_in_field.getText();
-                String time_out = time_out_field.getText();
-                database.createRequest(user_id, id_item, time_in, time_out);
-                showBorrowed();
-            }
-            else{
-                database.infoBox("The item ID you entered does not exist. Please check your entry.", null, "Failed");
-            }
-
+        Integer user_id = database.session;
+        if (item_exists){
+            String time_in = time_in_field.getText();
+            String time_out = time_out_field.getText();
+            database.createRequest(user_id, id_item, time_in, time_out);
+            showRequests();
         }
-        else {
-            database.infoBox("This username does not exist, please check your username entry field.", null, "Failed");
+        else{
+            database.infoBox("The item ID you entered does not exist. Please check your entry.", null, "Failed");
         }
     }
 }
