@@ -21,6 +21,7 @@ public class UserDashboard implements Initializable {
     public TextField number_of_items;
     public Button request_button;
     public Button list_items;
+    public Button add_fav_button;
 //    public Button list_items;
 
     @FXML
@@ -40,6 +41,11 @@ public class UserDashboard implements Initializable {
     void showRequests() throws Exception{
         DynamicTableView table = new DynamicTableView();
         table.buildData(rootPane, tableView, "borrowed");
+    }
+
+    void showFavorites() throws Exception{
+        DynamicTableView table = new DynamicTableView();
+        table.buildData(rootPane, tableView, "favorites");
     }
 
     @FXML
@@ -68,8 +74,9 @@ public class UserDashboard implements Initializable {
         // Search for your history based on Username entry - can get the UserID by searching for name - getUsername in databaseconnector (i believe)
     }
 
-    public void showFavoritesClick(ActionEvent event) {
+    public void showFavoritesClick(ActionEvent event) throws Exception {
         // search for the favorites by entering username - get userID by using the getUsername function (i believe) - see admin.java for examples
+        showFavorites();
     }
 
     public void onRequestClick(ActionEvent event) throws Exception {
@@ -112,7 +119,45 @@ public class UserDashboard implements Initializable {
             }
     }
 
-    public void addFavoritesClick(ActionEvent event) {
-        // take username, item id and name - then add to favorites table - cross verify that the item id and name match - model after username function
+    public void addFavoritesClick(ActionEvent event) throws Exception {
+        // take item id and name - then add to favorites table - cross verify that the item id and name match - model after username function
+        DatabaseConnector database = new DatabaseConnector();
+        //Statement statement = con.createStatement();
+        Window window = add_fav_button.getScene().getWindow();
+        //statement.executeUpdate("INSERT INTO favorites ");
+
+        if (item_id_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the ID of the ITEM you wish to add to your favorites list.");
+            return;
+        }
+        if (item_name_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the NAME of the ITEM you wish to add to the favorites list.");
+            return;
+    }
+        Integer id_item = Integer.parseInt(item_id_field.getText());
+        String item_name = item_name_field.getText();
+        Integer user_id = database.session;
+
+        boolean item_id_exists = database.getItem(id_item);
+        boolean item_name_exists = database.itemExists(item_name);
+        boolean item_info_matches = database.verifyItem(id_item, item_name);
+
+        if (item_info_matches) {
+            database.addFavorite(id_item, item_name, user_id);
+            showFavorites();
+            item_name_field.clear();
+            item_id_field.clear();
+        }
+        else if (!item_id_exists) {
+            database.infoBox("The ITEM ID you entered does not exist. Please check your entry.", null, "Failed");
+        }
+        else if (!item_name_exists) {
+            database.infoBox("The ITEM NAME you entered does not exist. Please check your entry.", null, "Failed");
+        }
+        else {
+            database.infoBox("The ITEM NAME entered is not associated with the ITEM ID entered. Please ensure item data matches correctly.", null, "Failed");
+        }
     }
 }

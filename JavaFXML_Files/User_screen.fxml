@@ -52,7 +52,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="211.0" layoutY="360.0" mnemonicParsing="false" onAction="#addFavoritesClick" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: #24272B;" text="Add to Favorites" textFill="#e8f1f2">
+            <Button fx:id="add_fav_button" layoutX="211.0" layoutY="360.0" mnemonicParsing="false" onAction="#addFavoritesClick" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: #24272B;" text="Add to Favorites" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
