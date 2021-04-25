@@ -24,6 +24,7 @@ public class UserDashboard implements Initializable {
     public Button add_fav_button;
     public TextField favorite_id_field;
     public Button deleteFavorite;
+    public DatabaseConnector db = new DatabaseConnector();
 //    public Button list_items;
 
     @FXML
@@ -67,8 +68,24 @@ public class UserDashboard implements Initializable {
 
     }
 
-    public void onSearchClick(ActionEvent event) {
-        // Take input from fields - Item ID, item name, producer - Don't believe you need to cross-check entry relationships
+    public void onSearchClick(ActionEvent event) throws Exception{
+        int id = db.getItemId(item_name_field.getText());
+
+        if(item_name_field.getText().isEmpty())
+        {
+            db.showAlert(Alert.AlertType.ERROR, null, "Form Error!",
+                    "Please enter the NAME of the ITEM you wish to borrow");
+            return;
+        }else
+        {
+            if(id > -1)
+            {
+                db.infoBox("The ID for item \"" + item_name_field.getText() + "\" is: " + id, null, "Success");
+            }else
+            {
+                db.infoBox("That item does not exist.", null, "Failed");
+            }
+        }
     }
 
     public void onBorrowedHistoryClick(ActionEvent event) throws Exception{

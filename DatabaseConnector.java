@@ -15,7 +15,7 @@ public class DatabaseConnector {
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/wmdb";
 
     private static final String DATABASE_USERNAME = "root";
-    private static final String DATABASE_PASSWORD = "ki8&fRda";
+    private static final String DATABASE_PASSWORD = "HdoXtXzjrk101!";
 
     private static final String SELECT_QUERY = "SELECT * FROM users WHERE username = ? and password_hash = ?";
     private static final String ROLE_QUERY = "SELECT role_id FROM users WHERE username = ? and password_hash = ?";
@@ -41,6 +41,7 @@ public class DatabaseConnector {
     private static final String DELETE_FAVORITE = "DELETE FROM favorites where USER_ID = ? and FAVORITEID = ?";
     private static final String FAVORITE_EXISTS = "SELECT item_id, user_id FROM favorites WHERE ITEM_ID = ? and USER_ID = ?";
     private static final String COUNT_BORROW_REQUESTS = "SELECT count(BORROW_REQUEST) from borrowed_items where user_id = ? and borrow_status = 'PENDING'";
+    private static final String SEARCH_ITEMS = "SELECT ITEMID FROM items WHERE name = ?";
 
     public static int session;
 
@@ -159,6 +160,33 @@ public class DatabaseConnector {
             printSQLException(e);
         }
         return false;
+    }
+
+    public int getItemId(String name) throws Exception
+    {
+        Connection con = getConnection();
+        try (
+
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(SEARCH_ITEMS)) {
+            preparedStatement.setString(1, name);
+
+//            System.out.println(preparedStatement);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int value = resultSet.getInt(1);
+//                System.out.print(value);
+                return value;
+            }
+
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            printSQLException(e);
+        }
+        return -1;
     }
 
     public boolean favoriteItemExists(int item_id, int user_id) throws Exception{
