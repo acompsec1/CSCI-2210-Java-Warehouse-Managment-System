@@ -53,6 +53,7 @@ public class AdminDashboard implements Initializable {
     public Button show_borrow_rent;
     public TextField provider;
     public TextField location;
+    public TextField favorite_id_field;
 
     @FXML
     private BorderPane rootPane;
@@ -210,6 +211,7 @@ public class AdminDashboard implements Initializable {
     public void onAcceptReject(ActionEvent event) throws Exception{
         DatabaseConnector database = new DatabaseConnector();
         Window window = userAdd.getScene().getWindow();
+        showBorrowed();
         if (request_id_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
                     "Please enter the request ID");
@@ -244,7 +246,29 @@ public class AdminDashboard implements Initializable {
         showBorrowed();
     }
 
-    public void onDeleteFavorite(ActionEvent event) {
+    public void onDeleteFavorite(ActionEvent event) throws Exception {
+        DatabaseConnector database = new DatabaseConnector();
+        Window window = favoriteDelete.getScene().getWindow();
+        showFavorites();
+        Integer user_id = database.session;
+        if (favorite_id_field.getText().isEmpty()){
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the FAVORITE_ID of the Favorite you wish to delete.");
+            return;
+        }
+
+        Integer id_favorite = Integer.parseInt(favorite_id_field.getText());
+        boolean flag = database.getFavorite(id_favorite);
+
+        if (flag) {
+            database.deleteFavorite(id_favorite, user_id);
+            favorite_id_field.clear();
+        }
+        else {
+            database.infoBox("This FAVORITE ID does not exist, please check your data entries.", null, "Failed");
+        }
+        showFavorites();
+
     }
 
     public void onEditUser(ActionEvent event) throws Exception {
@@ -317,6 +341,8 @@ public class AdminDashboard implements Initializable {
         //Statement statement = con.createStatement();
         Window window = favoriteAdd.getScene().getWindow();
         //statement.executeUpdate("INSERT INTO favorites ");
+
+        showItems();
 
         if (item_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",

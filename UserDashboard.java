@@ -22,6 +22,8 @@ public class UserDashboard implements Initializable {
     public Button request_button;
     public Button list_items;
     public Button add_fav_button;
+    public TextField favorite_id_field;
+    public Button deleteFavorite;
 //    public Button list_items;
 
     @FXML
@@ -159,5 +161,30 @@ public class UserDashboard implements Initializable {
         else {
             database.infoBox("The ITEM NAME entered is not associated with the ITEM ID entered. Please ensure item data matches correctly.", null, "Failed");
         }
+    }
+
+    public void deleteFavoritesClick(ActionEvent event) throws Exception {
+        DatabaseConnector database = new DatabaseConnector();
+        Window window = deleteFavorite.getScene().getWindow();
+        showFavorites();
+        Integer user_id = database.session;
+        if (favorite_id_field.getText().isEmpty()){
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the FAVORITE_ID of the Favorite you wish to delete.");
+            return;
+        }
+
+        Integer id_favorite = Integer.parseInt(favorite_id_field.getText());
+        boolean flag = database.getFavorite(id_favorite);
+
+        if (flag) {
+            database.deleteFavorite(id_favorite, user_id);
+            favorite_id_field.clear();
+        }
+        else {
+            database.infoBox("This FAVORITE ID does not exist, please check your data entries.", null, "Failed");
+        }
+        showFavorites();
+
     }
 }

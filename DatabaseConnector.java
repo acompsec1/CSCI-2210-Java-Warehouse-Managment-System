@@ -37,6 +37,8 @@ public class DatabaseConnector {
     private static final String REJECT_REQUEST = "DELETE FROM borrowed_items WHERE BORROW_REQUEST = ?";
     private static final String GET_USER_BORROWS = "SELECT * FROM borrowed_items WHERE user_id = ?";
     private static final String ADD_FAVORITE = "INSERT INTO favorites (item_id, item_name, user_id) VALUES (?, ?, ?)";
+    private static final String FAVORITE_QUERY = "SELECT FAVORITEID from favorites where FAVORITEID = ?";
+    private static final String DELETE_FAVORITE = "DELETE FROM favorites where USER_ID = ? and FAVORITEID = ?";
 
 
     public static int session;
@@ -624,6 +626,58 @@ public class DatabaseConnector {
         return false;
     }
 
+    public boolean deleteFavorite(Integer id_favorite, Integer user_id) throws SQLException {
+        Connection con = getConnection();
+
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(DELETE_FAVORITE)) {
+            preparedStatement.setInt(1, user_id);
+            preparedStatement.setInt(2,id_favorite);
+//            System.out.println(preparedStatement);
+
+            //EXECUTE THE QUERY
+            preparedStatement.executeUpdate();
+            infoBox("Favorite deleted!", null, "Success!");
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            System.out.print("FAILED TO EXECUTE DELETE PROPERLY");
+            printSQLException(e);
+        }
+        return false;
+    }
+
+    public boolean getFavorite(Integer favorite_id) throws SQLException {
+        Connection con = getConnection();
+        try (
+
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(FAVORITE_QUERY)) {
+            preparedStatement.setInt(1, favorite_id);
+
+//            System.out.println(preparedStatement);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Integer value = Integer.parseInt(resultSet.getString(1));
+//                System.out.print(value);
+                if (value.equals(favorite_id)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            printSQLException(e);
+        }
+        return false;
+    }
     public static void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
@@ -668,5 +722,6 @@ public class DatabaseConnector {
         alert.initOwner(owner);
         alert.show();
     }
+
 
 }
