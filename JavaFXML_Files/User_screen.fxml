@@ -52,12 +52,17 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="211.0" layoutY="360.0" mnemonicParsing="false" onAction="#addFavoritesClick" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: #24272B;" text="Add to Favorites" textFill="#e8f1f2">
+            <Button fx:id="add_fav_button" layoutX="211.0" layoutY="360.0" mnemonicParsing="false" onAction="#addFavoritesClick" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: #24272B;" text="Add to Favorites" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="221.0" layoutY="431.0" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="50.0" prefWidth="147.0" style="-fx-background-color: #24272B;" text="Search" textFill="#e8f1f2">
+            <Button layoutX="107.0" layoutY="481.0" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="50.0" prefWidth="147.0" style="-fx-background-color: #24272B;" text="Search" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="deleteFavorite" layoutX="211.0" layoutY="431.0" mnemonicParsing="false" onAction="#deleteFavoritesClick" prefHeight="50.0" prefWidth="166.0" style="-fx-background-color: #24272B;" text="Delete a Favorite" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -103,14 +108,15 @@
       <AnchorPane prefHeight="85.0" prefWidth="1080.0" style="-fx-background-color: #24272B #24272B;" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="item_id_field" layoutX="69.0" layoutY="12.0" prefHeight="25.0" prefWidth="104.0" promptText="Item ID Number" />
-            <Text fill="WHITE" layoutX="713.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time In" wrappingWidth="72.21630859375" />
+            <Text fill="WHITE" layoutX="556.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time In" wrappingWidth="72.21630859375" />
             <TextField fx:id="item_name_field" layoutX="183.0" layoutY="12.0" promptText="Item Name" />
-            <TextField fx:id="time_in_field" layoutX="662.0" layoutY="12.0" prefHeight="25.0" prefWidth="175.0" promptText="(HH:MM:SS MM/DD/YYYY)" />
-            <TextField fx:id="time_out_field" layoutX="842.0" layoutY="12.0" prefHeight="25.0" prefWidth="173.0" promptText="(HH:MM:SS MM/DD/YYYY)" />
-            <TextField fx:id="item_producer_field" layoutX="341.0" layoutY="12.0" prefHeight="25.0" prefWidth="105.0" promptText="Item Producer" />
-            <Text fill="WHITE" layoutX="907.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Out" />
-            <TextField fx:id="number_of_items" disable="true" layoutX="457.0" layoutY="12.0" prefHeight="25.0" prefWidth="83.0" promptText="# of items" />
+            <TextField fx:id="time_in_field" layoutX="505.0" layoutY="12.0" prefHeight="25.0" prefWidth="175.0" promptText="(HH:MM:SS MM/DD/YYYY)" />
+            <TextField fx:id="time_out_field" layoutX="685.0" layoutY="12.0" prefHeight="25.0" prefWidth="173.0" promptText="(HH:MM:SS MM/DD/YYYY)" />
+            <TextField fx:id="item_producer_field" layoutX="355.0" layoutY="12.0" prefHeight="25.0" prefWidth="105.0" promptText="Item Producer" />
+            <Text fill="WHITE" layoutX="750.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Out" />
             <Text fill="WHITE" layoutX="15.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item ID: " />
+            <TextField fx:id="favorite_id_field" layoutX="945.0" layoutY="12.0" prefHeight="25.0" prefWidth="104.0" promptText="Favorite ID" />
+            <Text fill="WHITE" layoutX="880.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Favorites:" />
          </children>
       </AnchorPane>
    </bottom>
