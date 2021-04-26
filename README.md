@@ -9,7 +9,7 @@ Spencer Wondolowski
 Antonio Lopez
 
 
-The role of team members:
+Team members and their roles:
 Andrew Mahr - Team Head, Programmer
 Andrew Manfredi - Teammate, Programmer
 Jake Intravaia - Teammate, Programmer
