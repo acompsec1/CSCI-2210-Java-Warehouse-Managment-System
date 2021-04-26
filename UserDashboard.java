@@ -24,7 +24,9 @@ public class UserDashboard implements Initializable {
     public Button add_fav_button;
     public TextField favorite_id_field;
     public Button deleteFavorite;
-    public DatabaseConnector db = new DatabaseConnector();
+    private DatabaseConnector database = new DatabaseConnector();
+    private DynamicTableView table = new DynamicTableView();
+//    private  Window window = list_items.getScene().getWindow();
 //    public Button list_items;
 
     @FXML
@@ -37,17 +39,17 @@ public class UserDashboard implements Initializable {
 //    @FXML
 //    private TableView tableView;
     void showItems() throws Exception{
-        DynamicTableView table = new DynamicTableView();
+
         table.buildData(rootPane, tableView, "items");
     }
 
     void showRequests() throws Exception{
-        DynamicTableView table = new DynamicTableView();
+
         table.buildData(rootPane, tableView, "borrowed");
     }
 
     void showFavorites() throws Exception{
-        DynamicTableView table = new DynamicTableView();
+
         table.buildData(rootPane, tableView, "favorites");
     }
 
@@ -69,28 +71,28 @@ public class UserDashboard implements Initializable {
     }
 
     public void onSearchClick(ActionEvent event) throws Exception{
-        int id = db.getItemId(item_name_field.getText());
+        int id = database.getItemId(item_name_field.getText());
+        showItems();
 
         if(item_name_field.getText().isEmpty())
         {
-            db.showAlert(Alert.AlertType.ERROR, null, "Form Error!",
-                    "Please enter the NAME of the ITEM you wish to borrow");
+            database.showAlert(Alert.AlertType.ERROR, null, "Form Error!",
+                    "Please enter the NAME of the ITEM you wish to find.");
             return;
         }else
         {
             if(id > -1)
             {
-                db.infoBox("The ID for item \"" + item_name_field.getText() + "\" is: " + id, null, "Success");
+                database.infoBox("The ID for item \"" + item_name_field.getText() + "\" is: " + id, null, "Success");
             }else
             {
-                db.infoBox("That item does not exist.", null, "Failed");
+                database.infoBox("That item does not exist.", null, "Failed");
             }
         }
     }
 
     public void onBorrowedHistoryClick(ActionEvent event) throws Exception{
         showRequests();
-        // Search for your history based on Username entry - can get the UserID by searching for name - getUsername in databaseconnector (i believe)
     }
 
     public void showFavoritesClick(ActionEvent event) throws Exception {
@@ -99,9 +101,8 @@ public class UserDashboard implements Initializable {
     }
 
     public void onRequestClick(ActionEvent event) throws Exception {
-        showItems();
-        DatabaseConnector database = new DatabaseConnector();
         Window window = request_button.getScene().getWindow();
+        showItems();
 
         if (item_id_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
@@ -145,12 +146,7 @@ public class UserDashboard implements Initializable {
     }
 
     public void addFavoritesClick(ActionEvent event) throws Exception {
-        // take item id and name - then add to favorites table - cross verify that the item id and name match - model after username function
-        DatabaseConnector database = new DatabaseConnector();
-        //Statement statement = con.createStatement();
         Window window = add_fav_button.getScene().getWindow();
-        //statement.executeUpdate("INSERT INTO favorites ");
-
         if (item_id_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
                     "Please enter the ID of the ITEM you wish to add to your favorites list.");
@@ -187,7 +183,6 @@ public class UserDashboard implements Initializable {
     }
 
     public void deleteFavoritesClick(ActionEvent event) throws Exception {
-        DatabaseConnector database = new DatabaseConnector();
         Window window = deleteFavorite.getScene().getWindow();
         showFavorites();
         Integer user_id = database.session;

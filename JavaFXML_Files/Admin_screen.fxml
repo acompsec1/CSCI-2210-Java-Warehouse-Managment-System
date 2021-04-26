@@ -102,6 +102,11 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
+            <Button fx:id="search_button" layoutX="269.0" layoutY="425.0" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: #24272B;" text="Search" textFill="#e8f1f2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </left>

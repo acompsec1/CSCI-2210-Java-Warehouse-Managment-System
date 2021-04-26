@@ -24,7 +24,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AdminDashboard implements Initializable {
-    
+
     public TextField username_field;
     public TextField password_field;
     public TextField role_field;
@@ -55,11 +55,14 @@ public class AdminDashboard implements Initializable {
     public TextField provider;
     public TextField location;
     public TextField favorite_id_field;
+    public Button search_button;
 
     @FXML
     private BorderPane rootPane;
     @FXML
     private TableView tableView;
+    private DatabaseConnector database = new DatabaseConnector();
+    private DynamicTableView table = new DynamicTableView();
 
 //    @FXML
 //    private Button login_button;
@@ -101,9 +104,7 @@ public class AdminDashboard implements Initializable {
 
     @FXML
     void onDeleteItemClick(ActionEvent event) throws Exception {
-        DatabaseConnector database = new DatabaseConnector();
-        Window window = userAdd.getScene().getWindow();
-
+        Window window = search_button.getScene().getWindow();
         if (item_field.getText().isEmpty()){
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
                     "Please enter the ITEM ID");
@@ -145,23 +146,20 @@ public class AdminDashboard implements Initializable {
 
     // Functions to more easily updates our tableview
     void showUsers() throws Exception{
-        DynamicTableView table = new DynamicTableView();
         table.buildData(rootPane, tableView, "users");
     }
 
     void showItems() throws Exception{
-        DynamicTableView table = new DynamicTableView();
+
         table.buildData(rootPane, tableView, "items");
     }
 
     @FXML
     void showFavorites() throws Exception{
-        DynamicTableView table = new DynamicTableView();
         table.buildData(rootPane, tableView, "favorites");
     }
 
     void showRequests() throws Exception{
-        DynamicTableView table = new DynamicTableView();
         table.buildData(rootPane, tableView, "borrowed");
     }
 
@@ -171,8 +169,7 @@ public class AdminDashboard implements Initializable {
     }
 
     public void onAddUser(ActionEvent event) throws Exception {
-        DatabaseConnector database = new DatabaseConnector();
-        Window window = userAdd.getScene().getWindow();
+        Window window = search_button.getScene().getWindow();
         if (username_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
                     "Please enter the username");
@@ -210,8 +207,7 @@ public class AdminDashboard implements Initializable {
     }
 
     public void onAcceptReject(ActionEvent event) throws Exception{
-        DatabaseConnector database = new DatabaseConnector();
-        Window window = userAdd.getScene().getWindow();
+        Window window = search_button.getScene().getWindow();
         showBorrowed();
         if (request_id_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
@@ -248,8 +244,7 @@ public class AdminDashboard implements Initializable {
     }
 
     public void onDeleteFavorite(ActionEvent event) throws Exception {
-        DatabaseConnector database = new DatabaseConnector();
-        Window window = favoriteDelete.getScene().getWindow();
+        Window window = search_button.getScene().getWindow();
         showFavorites();
         Integer user_id = database.session;
         if (favorite_id_field.getText().isEmpty()){
@@ -273,9 +268,7 @@ public class AdminDashboard implements Initializable {
     }
 
     public void onEditUser(ActionEvent event) throws Exception {
-        DatabaseConnector database = new DatabaseConnector();
-        Window window = userDelete.getScene().getWindow();
-
+        Window window = search_button.getScene().getWindow();
         if (user_id_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
                     "Please enter the ID of the user you wish to delete");
@@ -337,12 +330,7 @@ public class AdminDashboard implements Initializable {
     }
 
     public void onAddFavorite(ActionEvent event) throws Exception {
-        // take item id and name - then add to favorites table - cross verify that the item id and name match - model after username function
-        DatabaseConnector database = new DatabaseConnector();
-        //Statement statement = con.createStatement();
-        Window window = favoriteAdd.getScene().getWindow();
-        //statement.executeUpdate("INSERT INTO favorites ");
-
+        Window window = search_button.getScene().getWindow();
         showItems();
 
         if (item_field.getText().isEmpty()) {
@@ -385,9 +373,7 @@ public class AdminDashboard implements Initializable {
     }
 
     public void onDeleteUser(ActionEvent event) throws Exception {
-        DatabaseConnector database = new DatabaseConnector();
-        Window window = userDelete.getScene().getWindow();
-
+        Window window = search_button.getScene().getWindow();
         if (user_id_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
                     "Please enter the ID of the user you wish to delete");
@@ -421,8 +407,7 @@ public class AdminDashboard implements Initializable {
     }
 
     public void onEditItemClick(ActionEvent event) throws Exception {
-        DatabaseConnector database = new DatabaseConnector();
-        Window window = editItem.getScene().getWindow();
+        Window window = search_button.getScene().getWindow();
         String option;
 
         showItems();
@@ -495,7 +480,6 @@ public class AdminDashboard implements Initializable {
 
     void showBorrowed() throws Exception
     {
-        DynamicTableView table = new DynamicTableView();
         table.buildData(rootPane, tableView, "requested");
     }
 
@@ -504,10 +488,8 @@ public class AdminDashboard implements Initializable {
     }
 
     public void onBorrowRequest(ActionEvent event) throws Exception {
-        DatabaseConnector database = new DatabaseConnector();
-        Window window = borrow_rent_button.getScene().getWindow();
+        Window window = search_button.getScene().getWindow();
         showItems();
-
         if (item_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
                     "Please enter the ID of the ITEM you wish to borrow");
@@ -544,6 +526,27 @@ public class AdminDashboard implements Initializable {
         }
         else{
             database.infoBox("The item ID you entered does not exist. Please check your entry.", null, "Failed");
+        }
+    }
+
+    public void onSearchClick(ActionEvent event) throws Exception {
+        int id = database.getItemId(item_name_field.getText());
+        showItems();
+
+        if(item_name_field.getText().isEmpty())
+        {
+            database.showAlert(Alert.AlertType.ERROR, null, "Form Error!",
+                    "Please enter the NAME of the ITEM you wish to find.");
+            return;
+        }else
+        {
+            if(id > -1)
+            {
+                database.infoBox("The ID for item \"" + item_name_field.getText() + "\" is: " + id, null, "Success");
+            }else
+            {
+                database.infoBox("That item does not exist.", null, "Failed");
+            }
         }
     }
 }
