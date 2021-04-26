@@ -1,6 +1,7 @@
 import javafx.scene.control.Alert;
 import javafx.stage.Window;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 
 public class DatabaseConnector {
 
@@ -35,6 +37,7 @@ public class DatabaseConnector {
     private static final String REJECT_REQUEST = "DELETE FROM borrowed_items WHERE BORROW_REQUEST = ?";
     private static final String GET_USER_BORROWS = "SELECT * FROM borrowed_items WHERE user_id = ?";
     private static final String ADD_FAVORITE = "INSERT INTO favorites (item_id, item_name, user_id) VALUES (?, ?, ?)";
+    private static final String EDIT_ITEM = "UPDATE items SET quantity = ?, price = ? WHERE ITEMID = ? AND name = ?";
 
 
     public static int session;
@@ -601,18 +604,19 @@ public class DatabaseConnector {
         return false;
     }
 
-    public boolean addFavorite(Integer item_id, String item_name, Integer user_id) throws SQLException {
+    public boolean editItem(BigDecimal price, Integer quantity, Integer item_id, String item_name) throws SQLException {
         Connection con = getConnection();
 
         try (
                 // Step 2:Create a statement using connection object
-                PreparedStatement preparedStatement = con.prepareStatement(ADD_FAVORITE)) {
-            preparedStatement.setInt(1, item_id);
-            preparedStatement.setString(2, item_name);
-            preparedStatement.setInt(3, user_id);
+                PreparedStatement preparedStatement = con.prepareStatement(EDIT_ITEM)) {
+            preparedStatement.setBigDecimal(1, price);
+            preparedStatement.setInt(2, quantity);
+            preparedStatement.setInt(3, item_id);
+            preparedStatement.setString(4, item_name);
             //EXECUTE THE QUERY
             preparedStatement.executeUpdate();
-            infoBox("Item added to favorites!", null, "Success!");
+            infoBox("Item information has been updated!", null, "Success!");
 
         } catch (SQLException e) {
             // print SQL exception information
@@ -636,6 +640,27 @@ public class DatabaseConnector {
                 }
             }
         }
+    }
+
+    public boolean addFavorite(Integer item_id, String item_name, Integer user_id) throws SQLException {
+        Connection con = getConnection();
+
+        try (
+                // Step 2:Create a statement using connection object
+                PreparedStatement preparedStatement = con.prepareStatement(ADD_FAVORITE)) {
+            preparedStatement.setInt(1, item_id);
+            preparedStatement.setString(2, item_name);
+            preparedStatement.setInt(3, user_id);
+            //EXECUTE THE QUERY
+            preparedStatement.executeUpdate();
+            infoBox("Item added to favorites!", null, "Success!");
+
+        } catch (SQLException e) {
+            // print SQL exception information
+            System.out.print("FAILED TO EXECUTE CREATE REQUEST PROPERLY");
+            printSQLException(e);
+        }
+        return false;
     }
 
     public static String getMD5(String password)

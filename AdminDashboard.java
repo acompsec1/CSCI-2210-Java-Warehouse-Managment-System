@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -384,7 +385,59 @@ public class AdminDashboard implements Initializable {
         showUsers();
     }
 
-    public void onEditItemClick(ActionEvent event) {
+    public void onEditItemClick(ActionEvent event) throws Exception {
+        // take item id and name - then add to favorites table - cross verify that the item id and name match - model after username function
+        DatabaseConnector database = new DatabaseConnector();
+        //Statement statement = con.createStatement();
+        Window window = editItem.getScene().getWindow();
+        //statement.executeUpdate("INSERT INTO favorites ");
+
+        if (item_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the ID of the ITEM you wish to edit.");
+            return;
+        }
+        if (item_name_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the NAME of the ITEM you wish to edit.");
+            return;
+        }
+        if (number_items.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the QUANTITY of the ITEM you wish to edit.");
+            return;
+        }
+        if (price_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the PRICE of the ITEM you wish to edit.");
+            return;
+        }
+
+        BigDecimal price = new BigDecimal(price_field.getText());
+        Integer quantity= Integer.parseInt(number_items.getText());
+        Integer id_item = Integer.parseInt(item_field.getText());
+        String item_name = item_name_field.getText();
+
+        boolean item_id_exists = database.getItem(id_item);
+        boolean item_name_exists = database.itemExists(item_name);
+        boolean item_info_matches = database.verifyItem(id_item, item_name);
+
+        if (item_info_matches) {
+            database.editItem(price, quantity, id_item, item_name);
+            showItems();
+            price_field.clear();
+            item_name_field.clear();
+            item_field.clear();
+        }
+        else if (!item_id_exists) {
+            database.infoBox("The ITEM ID you entered does not exist. Please check your entry.", null, "Failed");
+        }
+        else if (!item_name_exists) {
+            database.infoBox("The ITEM NAME you entered does not exist. Please check your entry.", null, "Failed");
+        }
+        else {
+            database.infoBox("The ITEM NAME entered is not associated with the ITEM ID entered. Please ensure item data matches correctly.", null, "Failed");
+        }
     }
 
     void showBorrowed() throws Exception
