@@ -35,7 +35,7 @@ CREATE TABLE `borrowed_items` (
   PRIMARY KEY (`BORROW_REQUEST`),
   KEY `USERID_idx` (`user_id`),
   CONSTRAINT `USERID` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `borrowed_items` (
 
 LOCK TABLES `borrowed_items` WRITE;
 /*!40000 ALTER TABLE `borrowed_items` DISABLE KEYS */;
-INSERT INTO `borrowed_items` VALUES (9,1,1,4,'2021-08-19 10:10:10','2022-08-19 11:11:11','ACCEPTED'),(10,1,1,4,'2021-08-19 10:10:10','2021-08-19 11:11:11','ACCEPTED'),(11,1,1,1,'2021-01-01 10:10:10','2021-12-12 11:11:11','ACCEPTED'),(12,1,1,5,'2012-12-12 10:10:10','2021-12-12 12:12:12','ACCEPTED');
+INSERT INTO `borrowed_items` VALUES (9,1,1,4,'2021-08-19 10:10:10','2022-08-19 11:11:11','ACCEPTED'),(10,1,1,4,'2021-08-19 10:10:10','2021-08-19 11:11:11','ACCEPTED'),(11,1,1,1,'2021-01-01 10:10:10','2021-12-12 11:11:11','ACCEPTED'),(12,1,1,5,'2012-12-12 10:10:10','2021-12-12 12:12:12','ACCEPTED'),(13,2,1,5,'2021-12-12 10:10:10','2022-11-11 11:11:11','PENDING'),(14,2,1,5,'2021-12-12 10:10:10','2022-11-11 11:11:11','PENDING'),(15,2,1,5,'2021-12-12 10:10:10','2022-11-11 11:11:11','PENDING'),(17,3,1,1,'2021-11-11 10:10:10','2022-12-12 12:12:12','PENDING'),(18,1,1,1,'2022-12-20 12:12:12','2022-12-25 12:12:12','PENDING'),(19,1,1,1,'2022-12-20 12:12:12','2022-12-25 12:12:12','PENDING');
 /*!40000 ALTER TABLE `borrowed_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,7 +67,7 @@ CREATE TABLE `favorites` (
   KEY `ITEMNAME_idx` (`item_name`),
   CONSTRAINT `FAVITEMID` FOREIGN KEY (`item_id`) REFERENCES `items` (`ITEMID`),
   CONSTRAINT `USER_ID` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,7 +76,7 @@ CREATE TABLE `favorites` (
 
 LOCK TABLES `favorites` WRITE;
 /*!40000 ALTER TABLE `favorites` DISABLE KEYS */;
-INSERT INTO `favorites` VALUES (5,1,'Ferrari',1),(6,1,'Ferrari',3),(7,1,'Ferrari',1),(9,1,'Ferrari',1),(10,1,'Ferrari',5),(11,1,'Ferrari',5),(12,3,'Cheeseburger',1);
+INSERT INTO `favorites` VALUES (6,1,'Ferrari',3),(7,1,'Ferrari',1),(9,1,'Ferrari',1),(10,1,'Ferrari',5),(11,1,'Ferrari',5),(12,3,'Cheeseburger',1),(13,3,'Cheeseburger',5);
 /*!40000 ALTER TABLE `favorites` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,7 +107,7 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` VALUES (1,'Cars','Ferrari',1,400000,'2021-04-14 05:30:00','2021-06-05 04:20:00','Ferrari','Italy'),(2,'Food','Cheeseburger',1,10,'2021-12-12 10:10:10','2021-12-12 11:11:11','Burger King','West Haven'),(3,'Food','Cheeseburger',1,10,'2021-12-12 10:10:10','2021-12-12 11:11:11','Burger King','West Haven');
+INSERT INTO `items` VALUES (1,'Cars','Ferrari',4,5000000,'2021-04-14 05:30:00','2021-06-05 04:20:00','Ferrari','Italy'),(2,'Food','Cheeseburger',1,10,'2021-12-12 10:10:10','2021-12-12 11:11:11','Burger King','West Haven'),(3,'Food','Cheeseburger',1,10,'2021-12-12 10:10:10','2021-12-12 11:11:11','Burger King','West Haven');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +151,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`ID`),
   KEY `ROLEID_idx` (`role_id`),
   CONSTRAINT `ROLEID` FOREIGN KEY (`role_id`) REFERENCES `roles` (`ROLEID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,4 +173,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-25 15:34:56
+-- Dump completed on 2021-04-25 23:02:24
