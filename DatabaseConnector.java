@@ -13,10 +13,10 @@ import java.security.NoSuchAlgorithmException;
 
 public class DatabaseConnector {
 
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/wmdb";
+    private static final String DATABASE_URL = "jdbc:mysql://localhost:3305/wmdb";
 
     private static final String DATABASE_USERNAME = "root";
-    private static final String DATABASE_PASSWORD = "ki8&fRda";
+    private static final String DATABASE_PASSWORD = "swond1unh2024";
 
     private static final String SELECT_QUERY = "SELECT * FROM users WHERE username = ? and password_hash = ?";
     private static final String ROLE_QUERY = "SELECT role_id FROM users WHERE username = ? and password_hash = ?";
@@ -36,6 +36,9 @@ public class DatabaseConnector {
     private static final String DELETE_ITEM = "DELETE FROM items where ITEMID = ?";
     private static final String ACCEPT_REQUEST = "UPDATE borrowed_items SET borrow_status = \"ACCEPTED\" WHERE BORROW_REQUEST = ?";
     private static final String REJECT_REQUEST = "DELETE FROM borrowed_items WHERE BORROW_REQUEST = ?";
+
+    private static final String ADD_ITEM_QUERY = "insert into items (category, name, quantity, price, timein, timeout, provider, location) VALUES (?, ?, ?, ?, STR_TO_DATE(?, \"%H:%i:%s %m/%d/%Y\"), STR_TO_DATE(?, \"%H:%i:%s %m/%d/%Y\"), ?, ?)";
+
 //    private static final String GET_USER_BORROWS = "SELECT * FROM borrowed_items WHERE user_id = ?";
     private static final String ADD_FAVORITE = "INSERT INTO favorites (item_id, item_name, user_id) VALUES (?, ?, ?)";
     private static final String FAVORITE_QUERY = "SELECT FAVORITEID from favorites where FAVORITEID = ?";
@@ -100,6 +103,37 @@ public class DatabaseConnector {
         }
         return false;
     }
+
+
+    public boolean add_item(String category, String item_name, Integer quantity, BigDecimal price, String provider, String location, String time_in, String time_out)throws Exception{
+
+        Connection con = getConnection();
+
+        try (
+                PreparedStatement preparedStatement = con.prepareStatement(ADD_ITEM_QUERY)){
+
+            preparedStatement.setString(1, category);
+            preparedStatement.setString(2, item_name);
+            preparedStatement.setInt(3, quantity);
+            preparedStatement.setBigDecimal(4, price);
+            preparedStatement.setString(5, time_in);
+            preparedStatement.setString(6,time_out);
+            preparedStatement.setString(7,provider);
+            preparedStatement.setString(8,location);
+
+            //EXECUTE THE QUERY
+            preparedStatement.executeUpdate();
+            infoBox("Item Successfully Added", null, "Success!");
+
+        } catch (SQLException i){
+            //print SQL exception information
+            printSQLException(i);
+        }
+
+        return false;
+    }
+
+
 
     public boolean userExists(String usernameId) throws Exception{
 

@@ -98,8 +98,81 @@ public class AdminDashboard implements Initializable {
     }
 
     @FXML
-    void onAddItemClick(ActionEvent event) throws IOException{
+    void onAddItemClick(ActionEvent event) throws Exception {
         System.out.print("Add Item Button Pressed");
+
+        Window window = itemAdd.getScene().getWindow();
+
+        if (category_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the category.");
+            return;
+        }
+
+        if (item_name_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the name of the item.");
+            return;
+        }
+
+        if (number_items.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the number of items.");
+            return;
+        }
+
+        if (price_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the price of the item.");
+            return;
+        }
+
+        if (provider.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the provider of the item.");
+            return;
+        }
+
+        if (location.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the location of the item.");
+            return;
+        }
+
+        if (time_in_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the TIME IN information for your request");
+            return;
+        }
+
+        if (time_out_field.getText().isEmpty()) {
+            database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
+                    "Please enter the TIME OUT information for your request");
+            return;
+        }
+
+        String category = category_field.getText();
+        String item_name = item_name_field.getText();
+        Integer quantity = Integer.parseInt(number_items.getText());
+        BigDecimal price = BigDecimal.valueOf(Integer.parseInt(price_field.getText()));
+        String provider_name = provider.getText();
+        String location_name = location.getText();
+        String time_in = time_in_field.getText();
+        String time_out = time_out_field.getText();
+
+        database.add_item(category, item_name, quantity, price, provider_name, location_name, time_in, time_out);
+
+        category_field.clear();
+        item_name_field.clear();
+        number_items.clear();
+        price_field.clear();
+        provider.clear();
+        location.clear();
+        time_in_field.clear();
+        time_out_field.clear();
+
+        showItems();
+
     }
 
     @FXML
