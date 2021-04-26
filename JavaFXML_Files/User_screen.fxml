@@ -57,7 +57,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button layoutX="107.0" layoutY="481.0" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="50.0" prefWidth="147.0" style="-fx-background-color: #24272B;" text="Search" textFill="#e8f1f2">
+            <Button layoutX="127.0" layoutY="481.0" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="50.0" prefWidth="147.0" style="-fx-background-color: #24272B;" text="Search" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
