@@ -33,7 +33,6 @@
                         <Font size="48.0" />
                      </font>
                   </Label>
-                  <Button id="forgot_psword" fx:id="psword_reset" layoutX="92.0" layoutY="435.0" mnemonicParsing="false" onAction="#onPasswordResetClick" prefHeight="36.0" prefWidth="167.0" style="-fx-background-color: #E8F1F2;" text="Forgot Password?" />
                   <Label layoutX="123.0" layoutY="132.0" prefHeight="35.0" prefWidth="87.0" text="Username" textFill="#004ba8">
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -47,25 +46,30 @@
    <left>
       <AnchorPane prefHeight="502.0" prefWidth="560.0" style="-fx-background-color: #24272B;" BorderPane.alignment="CENTER">
          <children>
-            <Button id="signup_btn" fx:id="signup_btn" layoutX="127.0" layoutY="357.0" mnemonicParsing="false" onAction="#onSignUpClick" prefHeight="36.0" prefWidth="305.0" style="-fx-background-color: #157F1F; -fx-background-radius: 25;" text="Sign Up" textFill="#e8f1f2">
+            <Button id="signup_btn" fx:id="signup_btn" layoutX="127.0" layoutY="397.0" mnemonicParsing="false" onAction="#onSignUpClick" prefHeight="36.0" prefWidth="305.0" style="-fx-background-color: #157F1F; -fx-background-radius: 25;" text="Sign Up" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Button>
-            <Label layoutX="127.0" layoutY="311.0" text="Don't have an Accout? &#10;Enroll Now!&#10;" textFill="#e8f1f2" />
-            <Label layoutX="127.0" layoutY="173.0" prefHeight="47.0" prefWidth="305.0" text="WMS is a system developed for Managing Warehouses &#10;by the Java team The Knicks for CSCI-2210-01 &#10;" textFill="#e8f1f2" />
-            <Label layoutX="97.0" layoutY="33.0" prefHeight="139.0" prefWidth="366.0" text="Welcome to &#10;Warehouse Manager!" textAlignment="CENTER" textFill="#e8f1f2">
+            <Label layoutX="127.0" layoutY="351.0" text="Don't have an Account? &#10;Enroll Now!&#10;" textFill="#e8f1f2" />
+            <Label layoutX="127.0" layoutY="213.0" prefHeight="47.0" prefWidth="305.0" text="WMS is a system developed for Managing Warehouses &#10;by the Java Team: The Knicks for CSCI-2210-01 &#10;" textFill="#e8f1f2" />
+            <Label layoutX="97.0" layoutY="73.0" prefHeight="139.0" prefWidth="366.0" text="Welcome to &#10;Warehouse Manager!" textAlignment="CENTER" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>
             </Label>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="171.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Logo_Long.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </left>
    <top>
       <AnchorPane prefHeight="130.0" prefWidth="200.0" style="-fx-background-color: #24272b;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="170.0" fitWidth="185.0" layoutX="185.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Logo_Final.png" />
                </image>

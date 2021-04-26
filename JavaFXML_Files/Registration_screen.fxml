@@ -12,12 +12,12 @@
    <left>
       <AnchorPane prefHeight="395.0" prefWidth="417.0" style="-fx-background-color: #24272b;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="48.0" layoutY="62.0" prefHeight="38.0" prefWidth="321.0" text="Welcome to Resgistration" textAlignment="CENTER" textFill="#e8f1f2">
+            <Label layoutX="48.0" layoutY="62.0" prefHeight="38.0" prefWidth="321.0" text="     Welcome to Registration" textAlignment="CENTER" textFill="#e8f1f2">
                <font>
                   <Font name="System Bold" size="26.0" />
                </font>
             </Label>
-            <Label layoutX="48.0" layoutY="135.0" text="Thank you for choosing to create&#10;and account with WMS all we ask &#10;of you is that you provide a Username &#10;and a Password to create your accout" textAlignment="CENTER" textFill="#e8f1f2">
+            <Label layoutX="18.0" layoutY="149.0" text="Thank you for choosing to create&#10;an account with WMS! Please provide a Username &#10;and a Password to create your account." textAlignment="CENTER" textFill="#e8f1f2">
                <font>
                   <Font size="18.0" />
                </font>

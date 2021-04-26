@@ -99,8 +99,6 @@ public class AdminDashboard implements Initializable {
 
     @FXML
     void onAddItemClick(ActionEvent event) throws Exception {
-        System.out.print("Add Item Button Pressed");
-
         Window window = itemAdd.getScene().getWindow();
 
         if (category_field.getText().isEmpty()) {
@@ -178,6 +176,7 @@ public class AdminDashboard implements Initializable {
     @FXML
     void onDeleteItemClick(ActionEvent event) throws Exception {
         Window window = search_button.getScene().getWindow();
+        showItems();
         if (item_field.getText().isEmpty()){
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
                     "Please enter the ITEM ID");
@@ -447,6 +446,7 @@ public class AdminDashboard implements Initializable {
 
     public void onDeleteUser(ActionEvent event) throws Exception {
         Window window = search_button.getScene().getWindow();
+        showUsers();
         if (user_id_field.getText().isEmpty()) {
             database.showAlert(Alert.AlertType.ERROR, window, "Form Error!",
                     "Please enter the ID of the user you wish to delete");
