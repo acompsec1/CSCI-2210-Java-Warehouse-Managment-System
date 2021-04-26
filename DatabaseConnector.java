@@ -13,10 +13,10 @@ import java.security.NoSuchAlgorithmException;
 
 public class DatabaseConnector {
 
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:3305/wmdb";
+    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/wmdb";
 
     private static final String DATABASE_USERNAME = "root";
-    private static final String DATABASE_PASSWORD = "swond1unh2024";
+    private static final String DATABASE_PASSWORD = "HdoXtXzjrk101!";
 
     private static final String SELECT_QUERY = "SELECT * FROM users WHERE username = ? and password_hash = ?";
     private static final String ROLE_QUERY = "SELECT role_id FROM users WHERE username = ? and password_hash = ?";
