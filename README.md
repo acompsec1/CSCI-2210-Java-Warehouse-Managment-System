@@ -16,6 +16,10 @@ Jake Intravaia - Teammate, Programmer
 Spencer Wondolowski - Teammate, Programmer
 Antonio Lopez - Teammate, Programmer
 
+The final project report is accessible through the  [The Knicks Java Final Project Report](The_Knicks_Java_Final_Project_Report.pdf) file.
+
+The final project presentation is accessible through the [The Knicks Java Final Project Presentation](The Knicks Java Final Project Presentation.pptx) file.
+
 
 ## Needed Modules/Libraries
 In order to run our code, the following libraries, files, and programs are needed:
